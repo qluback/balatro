@@ -30,9 +30,10 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 TODO :
+Ajouter niveaux des mains de poker
 Au clic sur une Card: 
-- Refresh state cardsSelected
-- Calculer une combinaison prévisionnelle
+- OK: Refresh state cardsSelected
+- OK: Calculer une combinaison prévisionnelle avec le state cardsSelected
 Au clic sur le bouton Défausser :
 - Supprimer cartes du deck de la manche en cours
 - Décrémenter le nombre de défausses restantes
