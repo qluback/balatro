@@ -3,23 +3,23 @@ import { CardType } from "../types/CardType";
 export function getPokerHand(cards: CardType[]): string {
   let pokerHand = "";
   if (isStraightFlush(cards)) {
-    pokerHand = "Quinte flush";
+    pokerHand = "straight-flush";
   } else if (isFourOfAKind(cards)) {
-    pokerHand = "Carré";
+    pokerHand = "four-of-a-kind";
   } else if (isFullHouse(cards)) {
-    pokerHand = "Main pleine";
+    pokerHand = "full-house";
   } else if (isFlush(cards)) {
-    pokerHand = "Couleur";
+    pokerHand = "flush";
   } else if (isStraightPokerHand(cards)) {
-    pokerHand = "Suite";
+    pokerHand = "straight";
   } else if (isThreeOfAKind(cards)) {
-    pokerHand = "Brelan";
+    pokerHand = "three-of-a-kind";
   } else if (isTwoPair(cards)) {
-    pokerHand = "Double paire";
+    pokerHand = "two-pairs";
   } else if (isOnePair(cards)) {
-    pokerHand = "Paire";
+    pokerHand = "pair";
   } else if (isHighCard(cards)) {
-    pokerHand = "Carte haute";
+    pokerHand = "high-card";
   }
 
   return pokerHand;
@@ -216,17 +216,6 @@ function areSameColor(cards: CardType[]): boolean {
   }
 
   // console.log("not same color");
-  return false;
-}
-
-function areSameLabels(cards: CardType[]): boolean {
-  if (
-    cards.filter((card: CardType) => card.label !== cards[0].label).length === 0
-  ) {
-    return true;
-  }
-
-  // console.log("not same labels");
   return false;
 }
 

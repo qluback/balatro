@@ -1,21 +1,18 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { CARDS_DECK_DATA } from "./cards_deck_data";
-import { useState } from "react";
-import { BASE_BLINDS } from "./base_blinds";
-import { BlindName } from "./enums/BlindName";
-import { GameType } from "./types/GameType";
-import { AnteType } from "./types/AnteType";
 import { CardType } from "./types/CardType";
 import Card from "./components/Card";
 import { getPokerHand } from "./services/PokerHandChecker";
+import { CARDS_DECK_DATA } from "./balatro_data";
+import { PokerHandType } from "./types/PokerHandType";
+import useGameStore from "./stores/GameStore";
+import { useCallback } from "react";
+import ForecastPokerHand from "./components/ForecastPokerHand";
 
 function App() {
-  const [game, setGame] = useState<GameType>(initializeGame());
-  const [cardsSelected, setCardsSelected] = useState<CardType[]>([]);
-  const [forecastPokerHand, setForecastPokerHand] = useState<string>("");
+  const game = useGameStore((state) => state.game);
+  const cardsSelected = useGameStore((state) => state.cardsSelected);
 
-  function handleSelectCard(cardSelected: CardType) {
+  function handleSelectCard(cardSelected: CardType): boolean {
     const cardsSelectedUpdated: CardType[] = cardsSelected;
     const existingCardSelected = cardsSelectedUpdated.findIndex(
       (card: CardType) =>
@@ -24,55 +21,47 @@ function App() {
 
     if (existingCardSelected !== -1) {
       cardsSelectedUpdated.splice(existingCardSelected, 1);
+    } else if (cardsSelectedUpdated.length === 5) {
+      return false;
     } else {
       cardsSelectedUpdated.push(cardSelected);
     }
 
-    setCardsSelected(cardsSelectedUpdated);
+    useGameStore.getState().setCardsSelected(cardsSelectedUpdated);
 
-    setForecastPokerHand(getPokerHand(cardsSelected));
+    const forecastPokerHandId = getPokerHand(cardsSelected);
+    const forecastPokerHandFound: PokerHandType | undefined =
+      game.pokerHands.find(
+        (pokerHand: PokerHandType) => pokerHand.id === forecastPokerHandId
+      );
+    useGameStore
+      .getState()
+      .setForecastPokerHand(
+        forecastPokerHandFound !== undefined ? forecastPokerHandFound : null
+      );
+    
+      return true;
   }
 
-  function initializeGame(): GameType {
-    let newGame: GameType = {
-      antes: [],
-      maxHands: 4,
-      maxDiscards: 4,
-      money: 4,
-      currentAnte: 1,
-    };
-
-    BASE_BLINDS.forEach((baseBlind) => {
-      const ante: AnteType = {
-        blinds: [
-          { name: BlindName.SmallBlind, tokenObjective: baseBlind },
-          { name: BlindName.BigBlind, tokenObjective: baseBlind * 1.5 },
-          { name: BlindName.BossBlind, tokenObjective: baseBlind * 2 },
-        ],
-      };
-      newGame.antes.push(ante);
-    });
-
-    return newGame;
-  }
-
-  function shuffleArray(deck: Array<CardType>): Array<CardType> {
-    // for (let i = deck.length - 1; i > 0; i--) {
-    //   const j = Math.floor(Math.random() * (i + 1));
-    //   const temp = deck[i];
-    //   deck[i] = deck[j];
-    //   deck[j] = temp;
-    // }
+  const shuffleArray = useCallback((deck: Array<CardType>): Array<CardType> => {
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = deck[i];
+      deck[i] = deck[j];
+      deck[j] = temp;
+    }
 
     return deck;
-  }
+  }, []);
 
   let deck = shuffleArray(CARDS_DECK_DATA);
-  let board = deck.slice(0, 52);
+  let board = deck.slice(0, 8);
   console.log(game);
   return (
     <div className="App">
-      <section><p>{forecastPokerHand}</p></section>
+      <section>
+        <ForecastPokerHand />
+      </section>
       <section className="grid grid-cols-7 gap-4">
         {board.map((card: CardType) => {
           return (

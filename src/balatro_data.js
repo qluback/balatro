@@ -310,5 +310,19 @@ export const CARDS_DECK_DATA = [
     label: "A",
     order: 14,
     points: 10,
-  }
+  },
+];
+
+export const BASE_BLINDS = [300, 800, 2000, 5000, 11000, 20000, 35000, 50000];
+
+export const BASE_POKER_HANDS_VALUES = [
+  { id: "straight-flush", name: "Quinte flush", points: 100, multiplier: 8 },
+  { id: "four-of-a-kind", name: "Carré", points: 60, multiplier: 7 },
+  { id: "full-house", name: "Main pleine", points: 40, multiplier: 4 },
+  { id: "flush", name: "Couleur", points: 35, multiplier: 4 },
+  { id: "straight", name: "Suite", points: 30, multiplier: 4 },
+  { id: "three-of-a-kind", name: "Brelan", points: 30, multiplier: 3 },
+  { id: "two-pairs", name: "Double paire", points: 20, multiplier: 2 },
+  { id: "pair", name: "Paire", points: 10, multiplier: 2 },
+  { id: "high-card", name: "Carte haute", points: 5, multiplier: 1 },
 ];

@@ -3,7 +3,7 @@ import { CardType } from "../types/CardType";
 
 interface CardProps {
   card: CardType;
-  onSelectCard: (card: CardType) => void;
+  onSelectCard: (card: CardType) => boolean;
 }
 
 export default function Card({card, onSelectCard}: CardProps) {
@@ -16,8 +16,11 @@ export default function Card({card, onSelectCard}: CardProps) {
   }
 
   function handleClick(card: CardType) {
-    setIsSelected(prevState => !prevState);
-    onSelectCard({suit: card.suit, label: card.label, order: card.order, points: card.points});
+    const result = onSelectCard({suit: card.suit, label: card.label, order: card.order, points: card.points});
+    console.log(result)
+    if (result) {
+      setIsSelected(prevState => !prevState);
+    }
   } 
 
   return (
