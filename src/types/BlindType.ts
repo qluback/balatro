@@ -2,5 +2,7 @@ import { BlindName } from "../enums/BlindName"
 
 export type BlindType = {
   name: BlindName
-  tokenObjective: number
+  tokenObjective: number,
+  score: number,
+  success: boolean
 }
