@@ -58,6 +58,7 @@ function App() {
 
   useGameStore.getState().setCurrentRound({
     blind: getNextBlind(game.antes),
+    deck: game.deck,
     hands: game.maxHands,
     discards: game.maxDiscards,
     score: 0

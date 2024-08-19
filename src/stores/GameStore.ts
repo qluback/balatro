@@ -16,6 +16,7 @@ type Store = {
   setCurrentRound: (round: RoundType) => void;
   handlePlayHand: (score: number) => void;
   handleDiscardHand: () => void;
+  updateRoundDeck: (deck: CardType[]) => void;
 };
 
 const useGameStore = create<Store>((set) => ({
@@ -40,7 +41,7 @@ const useGameStore = create<Store>((set) => ({
               success:
                 state.currentRound.blind !== null
                   ? state.currentRound.score + score >=
-                    state.currentRound.blind.tokenObjective
+                    state.currentRound.blind.scoreObjective
                   : false,
             }
           : null,
@@ -52,6 +53,17 @@ const useGameStore = create<Store>((set) => ({
           ? { ...state.currentRound, discards: state.currentRound.discards - 1 }
           : null,
     })),
+  updateRoundDeck: (deckUpdated: CardType[]) =>
+    set((state) => ({
+      currentRound:
+        state.currentRound !== null
+          ? { ...state.currentRound, deck: deckUpdated }
+          : null,
+    })),
 }));
+
+// function isCardSelected (card: CardType) {
+//   console.log(state.cardsSelected.map(a => a.foo));
+// }
 
 export default useGameStore;

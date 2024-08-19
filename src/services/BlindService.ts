@@ -9,7 +9,7 @@ export function getNextBlind(antes: AnteType[]): BlindType | null {
     }
 
     ante.blinds.some((blind: BlindType) => {
-      console.log(blind);
+      // console.log(blind);
       currentBlind = blind;
       return blind.success === false;
     });

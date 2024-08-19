@@ -36,8 +36,11 @@ TODO :
   - OK: Calculer une combinaison prévisionnelle avec le state cardsSelected
 - Au clic sur le bouton Défausser :
   - Supprimer cartes du deck de la manche en cours
-  - Décrémenter le nombre de défausses restantes
+  - OK : Décrémenter le nombre de défausses restantes
+  - Ne pas rendre cliquable si nombre restantes = 0
 - Au clic sur le bouton Jouer la main :
   - Supprimer cartes du deck de la manche en cours
-  - Décrémenter le nombre de mains restantes
-  - Calculer le nombre de points de la main + ajouter au total de la manche
+  - OK : Décrémenter le nombre de mains restantes
+  - OK : Calculer le nombre de points de la main ((combinaison + nombre de points de chaque carte carte) * multiplicateur) et ajouter au total de la manche
+  - Terminer le round si score du round >= objectif de score de la blind
+  - Terminer le round si le nombre de mains restantes = 0 après le calcul du score

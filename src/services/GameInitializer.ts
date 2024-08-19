@@ -23,9 +23,9 @@ function buildAntes(): AnteType[] {
   BASE_BLINDS.forEach((baseBlind) => {
     const ante: AnteType = {
       blinds: [
-        { name: BlindName.SmallBlind, tokenObjective: baseBlind, success: false },
-        { name: BlindName.BigBlind, tokenObjective: baseBlind * 1.5, success: false },
-        { name: BlindName.BossBlind, tokenObjective: baseBlind * 2, success: false },
+        { name: BlindName.SmallBlind, scoreObjective: baseBlind, success: false },
+        { name: BlindName.BigBlind, scoreObjective: baseBlind * 1.5, success: false },
+        { name: BlindName.BossBlind, scoreObjective: baseBlind * 2, success: false },
       ],
     };
     antes.push(ante);

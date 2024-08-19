@@ -7,26 +7,34 @@ export default function HandActionsMenu() {
   function handlePlayHand() {
     if (forecastPokerHand === null || currentRound === null) return;
 
-    // console.log(forecastPokerHand.points * forecastPokerHand.multiplier);
-    // game.currentBlind.score +=
-    //   forecastPokerHand.points * forecastPokerHand.multiplier;
-    //   console.log(game);
-    console.log(forecastPokerHand.points * forecastPokerHand.multiplier);
+    // console.log(cardsSelected.map(card => card.label));
+    const initialValue = 0;
+    const sumCardsPoints = cardsSelected.reduce((accumulator: number, currentValue) => accumulator + currentValue.points, initialValue);
+    // console.log((forecastPokerHand.points + sumCardsPoints) * forecastPokerHand.multiplier);
     useGameStore
       .getState()
-      .handlePlayHand(forecastPokerHand.points * forecastPokerHand.multiplier);
+      .handlePlayHand((forecastPokerHand.points + sumCardsPoints) * forecastPokerHand.multiplier);
   }
 
   function handleDiscardHand() {
     if (currentRound === null) return;
 
+    let currentDeck = currentRound.deck;
+    const existingCardIndex = currentDeck.findIndex((card) => card.label === cardsSelected[0].label && card.suit === cardsSelected[0].suit);
+    if (existingCardIndex !== -1) {
+      currentDeck.splice(existingCardIndex, 1);
+    }
+
+    console.log(currentDeck);
+
     useGameStore
       .getState()
       .handleDiscardHand();
+
+    useGameStore.getState().updateRoundDeck(currentDeck);
   }
 
   function handleSortCards(
-
   ) {}
 
   return (
