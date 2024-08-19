@@ -1,46 +1,55 @@
-import { create, State } from "zustand";
+import { create } from "zustand";
 import { CardType } from "../types/CardType";
 import { GameType } from "../types/GameType";
 import { PokerHandType } from "../types/PokerHandType";
 import { initializeGame } from "../services/GameInitializer";
-import { produce } from "immer";
-import { BlindType } from "../types/BlindType";
-import { getNextBlind } from "../services/BlindService";
+// import { produce } from "immer";
+import { RoundType } from "../types/RoundType";
 
 type Store = {
   game: GameType;
   cardsSelected: CardType[];
   forecastPokerHand: PokerHandType | null;
-  currentBlind: BlindType | null;
+  currentRound: RoundType | null;
   setCardsSelected: (cards: CardType[]) => void;
   setForecastPokerHand: (card: PokerHandType | null) => void;
-  setCurrentBlind: (blind: BlindType | null) => void;
-  updateCurrentBlindScore: (score: number) => void;
+  setCurrentRound: (round: RoundType) => void;
+  handlePlayHand: (score: number) => void;
+  handleDiscardHand: () => void;
 };
 
 const useGameStore = create<Store>((set) => ({
   game: initializeGame(),
   cardsSelected: [],
   forecastPokerHand: null,
-  currentBlind: null,
+  currentRound: null,
   setCardsSelected: (cards: CardType[]) =>
     set(() => ({ cardsSelected: cards })),
   setForecastPokerHand: (card: PokerHandType | null) =>
     set(() => ({ forecastPokerHand: card })),
   setGame: (game: GameType) => set(() => ({ game: game })),
-  setCurrentBlind: (blind: BlindType | null) =>
-    set(() => ({ currentBlind: blind })),
-  updateCurrentBlindScore: (score: number) =>
+  setCurrentRound: (round: RoundType) => set(() => ({ currentRound: round })),
+  handlePlayHand: (score: number) =>
     set((state) => ({
-      currentBlind:
-        state.currentBlind !== null
+      currentRound:
+        state.currentRound !== null
           ? {
-              ...state.currentBlind,
-              score: state.currentBlind.score + score,
+              ...state.currentRound,
+              hands: state.currentRound.hands - 1,
+              score: state.currentRound.score + score,
               success:
-                state.currentBlind.score + score >=
-                state.currentBlind.tokenObjective,
+                state.currentRound.blind !== null
+                  ? state.currentRound.score + score >=
+                    state.currentRound.blind.tokenObjective
+                  : false,
             }
+          : null,
+    })),
+  handleDiscardHand: () =>
+    set((state) => ({
+      currentRound:
+        state.currentRound !== null
+          ? { ...state.currentRound, discards: state.currentRound.discards - 1 }
           : null,
     })),
 }));

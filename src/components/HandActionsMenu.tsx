@@ -3,9 +3,9 @@ import useGameStore from "../stores/GameStore";
 export default function HandActionsMenu() {
   const forecastPokerHand = useGameStore((state) => state.forecastPokerHand);
   const cardsSelected = useGameStore((state) => state.cardsSelected);
-  let currentBlind = useGameStore((state) => state.currentBlind);
+  let currentRound = useGameStore((state) => state.currentRound);
   function handlePlayHand() {
-    if (forecastPokerHand === null || currentBlind === null) return;
+    if (forecastPokerHand === null || currentRound === null) return;
 
     // console.log(forecastPokerHand.points * forecastPokerHand.multiplier);
     // game.currentBlind.score +=
@@ -14,12 +14,20 @@ export default function HandActionsMenu() {
     console.log(forecastPokerHand.points * forecastPokerHand.multiplier);
     useGameStore
       .getState()
-      .updateCurrentBlindScore(forecastPokerHand.points * forecastPokerHand.multiplier);
+      .handlePlayHand(forecastPokerHand.points * forecastPokerHand.multiplier);
   }
 
-  function handleDiscardHand() {}
+  function handleDiscardHand() {
+    if (currentRound === null) return;
 
-  function handleSortCards() {}
+    useGameStore
+      .getState()
+      .handleDiscardHand();
+  }
+
+  function handleSortCards(
+
+  ) {}
 
   return (
     <section className="flex gap-8">

@@ -1,7 +1,7 @@
 import { AnteType } from "../types/AnteType";
 import { BlindType } from "../types/BlindType";
 
-export function getNextBlind(antes: AnteType[]): BlindType|null {
+export function getNextBlind(antes: AnteType[]): BlindType | null {
   let currentBlind: BlindType | null = null;
   antes.map((ante) => {
     if (currentBlind !== null) {

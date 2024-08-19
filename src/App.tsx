@@ -56,8 +56,12 @@ function App() {
     return deck;
   }, []);
 
-  const currentBlind = getNextBlind(game.antes);
-  useGameStore.getState().setCurrentBlind(currentBlind);
+  useGameStore.getState().setCurrentRound({
+    blind: getNextBlind(game.antes),
+    hands: game.maxHands,
+    discards: game.maxDiscards,
+    score: 0
+  });
   let roundDeck = shuffleArray(deck);
   let board = roundDeck.slice(0, 8);
   console.log(game);
