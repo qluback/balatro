@@ -7,28 +7,29 @@ import { initializeGame } from "../services/GameInitializer";
 import { RoundType } from "../types/RoundType";
 
 type Store = {
-  game: GameType;
+  game: GameType | null;
   cardsSelected: CardType[];
   forecastPokerHand: PokerHandType | null;
   currentRound: RoundType | null;
+  setGame: (game: GameType) => void;
   setCardsSelected: (cards: CardType[]) => void;
   setForecastPokerHand: (card: PokerHandType | null) => void;
   setCurrentRound: (round: RoundType) => void;
   handlePlayHand: (score: number) => void;
-  handleDiscardHand: () => void;
+  handleDiscardHand: (deck: CardType[], cardsAvailable: CardType[]) => void;
   updateRoundDeck: (deck: CardType[]) => void;
 };
 
 const useGameStore = create<Store>((set) => ({
-  game: initializeGame(),
+  game: null,
   cardsSelected: [],
   forecastPokerHand: null,
   currentRound: null,
+  setGame: (game: GameType) => set(() => ({ game: game })),
   setCardsSelected: (cards: CardType[]) =>
     set(() => ({ cardsSelected: cards })),
   setForecastPokerHand: (card: PokerHandType | null) =>
     set(() => ({ forecastPokerHand: card })),
-  setGame: (game: GameType) => set(() => ({ game: game })),
   setCurrentRound: (round: RoundType) => set(() => ({ currentRound: round })),
   handlePlayHand: (score: number) =>
     set((state) => ({
@@ -46,11 +47,16 @@ const useGameStore = create<Store>((set) => ({
             }
           : null,
     })),
-  handleDiscardHand: () =>
+  handleDiscardHand: (deck: CardType[], cardsAvailable: CardType[]) =>
     set((state) => ({
       currentRound:
         state.currentRound !== null
-          ? { ...state.currentRound, discards: state.currentRound.discards - 1 }
+          ? {
+              ...state.currentRound,
+              deck: deck,
+              cardsAvailable: cardsAvailable,
+              discards: state.currentRound.discards - 1,
+            }
           : null,
     })),
   updateRoundDeck: (deckUpdated: CardType[]) =>

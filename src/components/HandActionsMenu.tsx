@@ -1,4 +1,5 @@
 import useGameStore from "../stores/GameStore";
+import { CardType } from "../types/CardType";
 
 export default function HandActionsMenu() {
   const forecastPokerHand = useGameStore((state) => state.forecastPokerHand);
@@ -20,18 +21,24 @@ export default function HandActionsMenu() {
     if (currentRound === null) return;
 
     let currentDeck = currentRound.deck;
-    const existingCardIndex = currentDeck.findIndex((card) => card.label === cardsSelected[0].label && card.suit === cardsSelected[0].suit);
-    if (existingCardIndex !== -1) {
-      currentDeck.splice(existingCardIndex, 1);
-    }
+    let cardsAvailable = currentRound.cardsAvailable;
+    cardsSelected.map((cardSelected: CardType) => {
+      const existingCardIndex = currentDeck.findIndex((card) => card.label === cardSelected.label && card.suit === cardSelected.suit);
+      if (existingCardIndex !== -1) {
+        currentDeck.splice(existingCardIndex, 1);
+      }
+      
+      const existingCardAvailableIndex = cardsAvailable.findIndex((card) => card.label === cardSelected.label && card.suit === cardSelected.suit);
+      console.log(existingCardAvailableIndex);
+      if (existingCardAvailableIndex !== -1) {
+        cardsAvailable.splice(existingCardAvailableIndex, 1);
+      }
 
-    console.log(currentDeck);
-
-    useGameStore
+      useGameStore
       .getState()
-      .handleDiscardHand();
-
-    useGameStore.getState().updateRoundDeck(currentDeck);
+      .handleDiscardHand(currentDeck, cardsAvailable);
+    })
+    // console.log(currentDeck, cardsAvailable);
   }
 
   function handleSortCards(
