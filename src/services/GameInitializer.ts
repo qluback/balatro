@@ -3,7 +3,6 @@ import { BlindName } from "../enums/BlindName";
 import { AnteType } from "../types/AnteType";
 import { GameType } from "../types/GameType";
 import { PokerHandType } from "../types/PokerHandType";
-import { getNextBlind } from "./BlindService";
 
 export function initializeGame(): GameType {
   const antes = buildAntes();

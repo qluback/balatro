@@ -4,7 +4,7 @@ import { CardType } from "./CardType"
 export type RoundType = {
   blind: BlindType|null
   deck: CardType[],
-  cardsAvailable: CardType[],
+  cardsSelectable: CardType[],
   hands: number,
   discards: number,
   score: number

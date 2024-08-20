@@ -1,4 +1,3 @@
-import { current } from "immer";
 import { getPokerHand } from "../services/PokerHandChecker";
 import useGameStore from "../stores/GameStore";
 import { CardType } from "../types/CardType";
@@ -43,13 +42,12 @@ const currentRound = useGameStore((state) => state.currentRound);
 
     return true;
   }
-  console.log(currentRound?.cardsAvailable);
 
   return (
     <section>
       <Sidebar />
       <section className="grid grid-cols-8 gap-4">
-        {currentRound?.cardsAvailable.map((card: CardType) => {
+        {currentRound?.cardsSelectable.map((card: CardType) => {
             return (
               <Card
                 key={card.suit + card.label}

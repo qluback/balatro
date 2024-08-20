@@ -1,54 +1,39 @@
+import { refillCardsSelectable } from "../services/CardService";
 import useGameStore from "../stores/GameStore";
-import { CardType } from "../types/CardType";
 
 export default function HandActionsMenu() {
   const forecastPokerHand = useGameStore((state) => state.forecastPokerHand);
   const cardsSelected = useGameStore((state) => state.cardsSelected);
   let currentRound = useGameStore((state) => state.currentRound);
-  function handlePlayHand() {
-    if (forecastPokerHand === null || currentRound === null) return;
 
-    // console.log(cardsSelected.map(card => card.label));
+  function handlePlayHand() {
+    if (forecastPokerHand === null || currentRound === null || cardsSelected.length === 0) return;
+
     const initialValue = 0;
     const sumCardsPoints = cardsSelected.reduce((accumulator: number, currentValue) => accumulator + currentValue.points, initialValue);
-    // console.log((forecastPokerHand.points + sumCardsPoints) * forecastPokerHand.multiplier);
     useGameStore
       .getState()
       .handlePlayHand((forecastPokerHand.points + sumCardsPoints) * forecastPokerHand.multiplier);
+
+    refillCardsSelectable(currentRound.deck, currentRound.cardsSelectable, cardsSelected);
   }
 
   function handleDiscardHand() {
-    if (currentRound === null) return;
+    if (currentRound === null || cardsSelected.length === 0) return;
 
-    let currentDeck = currentRound.deck;
-    let cardsAvailable = currentRound.cardsAvailable;
-    cardsSelected.map((cardSelected: CardType) => {
-      const existingCardIndex = currentDeck.findIndex((card) => card.label === cardSelected.label && card.suit === cardSelected.suit);
-      if (existingCardIndex !== -1) {
-        currentDeck.splice(existingCardIndex, 1);
-      }
-      
-      const existingCardAvailableIndex = cardsAvailable.findIndex((card) => card.label === cardSelected.label && card.suit === cardSelected.suit);
-      console.log(existingCardAvailableIndex);
-      if (existingCardAvailableIndex !== -1) {
-        cardsAvailable.splice(existingCardAvailableIndex, 1);
-      }
-
-      useGameStore
-      .getState()
-      .handleDiscardHand(currentDeck, cardsAvailable);
-    })
-    // console.log(currentDeck, cardsAvailable);
+    useGameStore.getState().handleDiscardHand();
+    refillCardsSelectable(currentRound.deck, currentRound.cardsSelectable, cardsSelected);
+    console.log(currentRound.deck);
   }
 
-  function handleSortCards(
-  ) {}
+  // function handleSortCards(
+  // ) {}
 
   return (
     <section className="flex gap-8">
       <button
         className="border"
-        onClick={cardsSelected.length > 0 ? handlePlayHand : undefined}
+        onClick={handlePlayHand}
       >
         Jouer la main
       </button>
@@ -61,7 +46,7 @@ export default function HandActionsMenu() {
       </div>
       <button
         className="border"
-        onClick={cardsSelected.length > 0 ? handleDiscardHand : undefined}
+        onClick={handleDiscardHand}
       >
         Défausser
       </button>

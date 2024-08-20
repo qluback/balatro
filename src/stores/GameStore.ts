@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { CardType } from "../types/CardType";
 import { GameType } from "../types/GameType";
 import { PokerHandType } from "../types/PokerHandType";
-import { initializeGame } from "../services/GameInitializer";
 // import { produce } from "immer";
 import { RoundType } from "../types/RoundType";
 
@@ -16,7 +15,8 @@ type Store = {
   setForecastPokerHand: (card: PokerHandType | null) => void;
   setCurrentRound: (round: RoundType) => void;
   handlePlayHand: (score: number) => void;
-  handleDiscardHand: (deck: CardType[], cardsAvailable: CardType[]) => void;
+  handleDiscardHand: () => void;
+  refillCardsSelectable: (deck: CardType[], cardsSelectable: CardType[]) => void;
   updateRoundDeck: (deck: CardType[]) => void;
 };
 
@@ -47,15 +47,24 @@ const useGameStore = create<Store>((set) => ({
             }
           : null,
     })),
-  handleDiscardHand: (deck: CardType[], cardsAvailable: CardType[]) =>
+  handleDiscardHand: () =>
     set((state) => ({
       currentRound:
         state.currentRound !== null
           ? {
               ...state.currentRound,
-              deck: deck,
-              cardsAvailable: cardsAvailable,
               discards: state.currentRound.discards - 1,
+            }
+          : null,
+    })),
+    refillCardsSelectable: (deck: CardType[], cardsSelectable: CardType[]) => set((state) => ({
+      cardsSelected: [],
+      currentRound:
+        state.currentRound !== null
+          ? {
+              ...state.currentRound,
+              deck: deck,
+              cardsSelectable: cardsSelectable,
             }
           : null,
     })),

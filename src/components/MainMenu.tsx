@@ -1,29 +1,19 @@
-import { useCallback } from "react";
 import useGameStore from "../stores/GameStore";
-import { CardType } from "../types/CardType";
 import { initializeGame } from "../services/GameInitializer";
 import { getNextBlind } from "../services/BlindService";
+import { shuffleCards } from "../services/CardService";
 
 export default function MainMenu() {
-  const shuffleCards = useCallback((deck: CardType[]): CardType[] => {
-    for (let i = deck.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = deck[i];
-      deck[i] = deck[j];
-      deck[j] = temp;
-    }
-
-    return deck;
-  }, []);
-
   function handleStartGame() {
     const newGame = initializeGame();
     useGameStore.getState().setGame(newGame);
+    
     let roundDeck = shuffleCards(newGame.deck);
+    const cardsSelectable = roundDeck.splice(0, 8);
     useGameStore.getState().setCurrentRound({
       blind: getNextBlind(newGame.antes),
       deck: roundDeck,
-      cardsAvailable: roundDeck.slice(0, 8),
+      cardsSelectable: cardsSelectable,
       hands: newGame.maxHands,
       discards: newGame.maxDiscards,
       score: 0,

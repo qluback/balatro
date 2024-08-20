@@ -1,46 +1,20 @@
-# Getting Started with Create React App
+# Balatro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Développement du jeu "Balatro" en React Typescript
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-TODO :
+## To Do
 - Ajouter niveaux des mains de poker
 - Au clic sur une Card: 
-  - OK: Refresh state cardsSelected
-  - OK: Calculer une combinaison prévisionnelle avec le state cardsSelected
+  - [x] Refresh state cardsSelected
+  - [x] Calculer une combinaison prévisionnelle avec le state cardsSelected
 - Au clic sur le bouton Défausser :
-  - Supprimer cartes du deck de la manche en cours
-  - OK : Décrémenter le nombre de défausses restantes
-  - Ne pas rendre cliquable si nombre restantes = 0
+  - [x] Supprimer cartes du deck de la manche en cours et en rajouter dans les cartes sélectionnables
+  - [x] Décrémenter le nombre de défausses restantes
+  - [ ] Ne pas rendre cliquable si nombre restantes = 0
 - Au clic sur le bouton Jouer la main :
-  - Supprimer cartes du deck de la manche en cours
-  - OK : Décrémenter le nombre de mains restantes
-  - OK : Calculer le nombre de points de la main ((combinaison + nombre de points de chaque carte carte) * multiplicateur) et ajouter au total de la manche
-  - Terminer le round si score du round >= objectif de score de la blind
-  - Terminer le round si le nombre de mains restantes = 0 après le calcul du score
+  - [x] Supprimer cartes du deck de la manche en cours et en rajouter dans les cartes sélectionnables
+  - [x] Décrémenter le nombre de mains restantes
+  - [x] Calculer le nombre de points de la main ((combinaison + nombre de points de chaque carte) * multiplicateur) et ajouter au total de la manche
+  - [ ] Ajouter le nombre de points de chaque carte uniquement si la carte fait partie d'une combinaison (renvoyer les cartes marquant des points dans la fonction getPokerHand())
+  - [ ] Terminer le round si score du round >= objectif de score de la blind
+  - [ ] Terminer le round si le nombre de mains restantes = 0 après le calcul du score
