@@ -17,7 +17,6 @@ export default function Card({card, onSelectCard}: CardProps) {
 
   function handleClick(card: CardType) {
     const result = onSelectCard({suit: card.suit, label: card.label, order: card.order, points: card.points});
-    console.log("handleClick");
     if (result) {
       setIsSelected(prevState => !prevState);
     }

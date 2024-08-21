@@ -4,15 +4,16 @@ import { GameType } from "../types/GameType";
 import { PokerHandType } from "../types/PokerHandType";
 // import { produce } from "immer";
 import { RoundType } from "../types/RoundType";
+import { ForecastPokerHandType } from "../types/ForecastPokerHandType";
 
 type Store = {
   game: GameType | null;
   cardsSelected: CardType[];
-  forecastPokerHand: PokerHandType | null;
+  forecastPokerHand: ForecastPokerHandType | null;
   currentRound: RoundType | null;
   setGame: (game: GameType) => void;
   setCardsSelected: (cards: CardType[]) => void;
-  setForecastPokerHand: (card: PokerHandType | null) => void;
+  setForecastPokerHand: (forecastPokerHand: ForecastPokerHandType | null) => void;
   setCurrentRound: (round: RoundType) => void;
   handlePlayHand: (score: number) => void;
   handleDiscardHand: () => void;
@@ -28,11 +29,12 @@ const useGameStore = create<Store>((set) => ({
   setGame: (game: GameType) => set(() => ({ game: game })),
   setCardsSelected: (cards: CardType[]) =>
     set(() => ({ cardsSelected: cards })),
-  setForecastPokerHand: (card: PokerHandType | null) =>
-    set(() => ({ forecastPokerHand: card })),
+  setForecastPokerHand: (forecastPokerHand: ForecastPokerHandType | null) =>
+    set(() => ({ forecastPokerHand: forecastPokerHand })),
   setCurrentRound: (round: RoundType) => set(() => ({ currentRound: round })),
   handlePlayHand: (score: number) =>
     set((state) => ({
+      forecastPokerHand: null,
       currentRound:
         state.currentRound !== null
           ? {

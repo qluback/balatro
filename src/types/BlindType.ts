@@ -1,7 +1,7 @@
-import { BlindName } from "../enums/BlindName"
+import { BlindNameEnum } from "../enums/BlindNameEnum"
 
 export type BlindType = {
-  name: BlindName
+  name: BlindNameEnum
   scoreObjective: number,
   success: boolean
 }
