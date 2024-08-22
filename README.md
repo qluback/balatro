@@ -19,3 +19,7 @@ Développement du jeu "Balatro" en React Typescript
   - [ ] Ajouter le nombre de points de chaque carte uniquement si la carte fait partie d'une combinaison (renvoyer les cartes marquant des points dans la fonction getPokerHand())
   - [ ] Terminer le round si score du round >= objectif de score de la blind
   - [ ] Terminer le round si le nombre de mains restantes = 0 après le calcul du score
+- Au clic sur le bouton Trier la main par valeur :
+  - [ ] Trier les cardsSelectable par valeur
+- Au clic sur le bouton Trier la main par couleur :
+  - [ ] Trier les cardsSelectable par couleur

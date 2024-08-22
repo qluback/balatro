@@ -12,6 +12,7 @@ export default function Sidebar() {
       <p>Mains : {currentRound?.hands} / Défausses : {currentRound?.discards}</p>
       <p>Manche score : {currentRound?.score}</p>
       <ForecastPokerHand />
+      <p>Manche gagnée ? {currentRound?.success ? "Oui" : "Non"}</p>
     </header>
   );
 }

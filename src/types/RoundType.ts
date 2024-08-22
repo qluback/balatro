@@ -7,5 +7,6 @@ export type RoundType = {
   cardsSelectable: CardType[],
   hands: number,
   discards: number,
-  score: number
+  score: number,
+  success: boolean
 }

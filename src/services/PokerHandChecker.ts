@@ -1,8 +1,10 @@
+import { CardSortingEnum } from "../enums/CardSortingEnum";
 import { PokerHandEnum } from "../enums/PokerHandEnum";
 import useGameStore from "../stores/GameStore";
 import { CardType } from "../types/CardType";
 import { ForecastPokerHandType } from "../types/ForecastPokerHandType";
 import { PokerHandType } from "../types/PokerHandType";
+import { sortCards } from "./Card/CardSorter";
 
 interface PokerHandFunctionList {
   [key: string]: (cards: CardType[]) => null | PokerHandFoundData;
@@ -213,7 +215,7 @@ const pokerHandFunctions: PokerHandFunctionList = {
       return null;
     }
 
-    cards.sort(compare);
+    cards = sortCards(cards, CardSortingEnum.SORTING_ORDER);
 
     console.log(`It is a High Card ${cards[cards.length - 1].label}`);
 
@@ -222,16 +224,6 @@ const pokerHandFunctions: PokerHandFunctionList = {
     ]);
   },
 };
-
-function compare(a: CardType, b: CardType) {
-  if (a.order < b.order) {
-    return -1;
-  }
-  if (a.order > b.order) {
-    return 1;
-  }
-  return 0;
-}
 
 function hasEnoughCards(
   numberCards: number,
@@ -267,7 +259,7 @@ function isStraight(cards: CardType[]): boolean {
     cards[aceCardIndex].order = 1;
   }
   
-  cards.sort(compare);
+  cards = sortCards(cards, CardSortingEnum.SORTING_ORDER);
   for (let i = 0; i < cards.length - 1; i++) {
     if (cards[i + 1].order - cards[i].order !== 1) {
       // console.log("not a straight");

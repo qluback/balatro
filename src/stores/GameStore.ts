@@ -1,16 +1,16 @@
 import { create } from "zustand";
 import { CardType } from "../types/CardType";
 import { GameType } from "../types/GameType";
-import { PokerHandType } from "../types/PokerHandType";
-// import { produce } from "immer";
 import { RoundType } from "../types/RoundType";
 import { ForecastPokerHandType } from "../types/ForecastPokerHandType";
+import { CardSortingEnum } from "../enums/CardSortingEnum";
 
 type Store = {
   game: GameType | null;
   cardsSelected: CardType[];
   forecastPokerHand: ForecastPokerHandType | null;
   currentRound: RoundType | null;
+  sorting: CardSortingEnum;
   setGame: (game: GameType) => void;
   setCardsSelected: (cards: CardType[]) => void;
   setForecastPokerHand: (forecastPokerHand: ForecastPokerHandType | null) => void;
@@ -26,6 +26,7 @@ const useGameStore = create<Store>((set) => ({
   cardsSelected: [],
   forecastPokerHand: null,
   currentRound: null,
+  sorting: CardSortingEnum.SORTING_ORDER,
   setGame: (game: GameType) => set(() => ({ game: game })),
   setCardsSelected: (cards: CardType[]) =>
     set(() => ({ cardsSelected: cards })),

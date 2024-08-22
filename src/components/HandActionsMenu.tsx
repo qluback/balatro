@@ -1,4 +1,8 @@
-import { refillCardsSelectable } from "../services/CardService";
+import { CardSortingEnum } from "../enums/CardSortingEnum";
+import {
+  refillCardsSelectable,
+} from "../services/Card/CardService";
+import { sortCards } from "../services/Card/CardSorter";
 import useGameStore from "../stores/GameStore";
 
 export default function HandActionsMenu() {
@@ -45,8 +49,23 @@ export default function HandActionsMenu() {
     console.log(currentRound.deck);
   }
 
-  // function handleSortCards(
-  // ) {}
+  function handleSortCards(type: string) {
+    if (type === "value") {
+      useGameStore.getState().setCurrentRound({
+        ...currentRound!,
+        cardsSelectable:
+          sortCards(currentRound!.cardsSelectable, CardSortingEnum.SORTING_ORDER),
+      });
+
+      return;
+    }
+
+    useGameStore.getState().setCurrentRound({
+      ...currentRound!,
+      cardsSelectable:
+      sortCards(currentRound!.cardsSelectable, CardSortingEnum.SORTING_SUIT),
+    });
+  }
 
   return (
     <section className="flex gap-8">
@@ -56,8 +75,18 @@ export default function HandActionsMenu() {
       <div className="flex flex-col gap-4 border">
         <span>Trier la main</span>
         <div className="flex gap-4">
-          <button className="border border-yellow-600">Valeur</button>
-          <button className="border border-yellow-600">Couleur</button>
+          <button
+            className="border border-yellow-600"
+            onClick={() => handleSortCards("value")}
+          >
+            Valeur
+          </button>
+          <button
+            className="border border-yellow-600"
+            onClick={() => handleSortCards("suit")}
+          >
+            Couleur
+          </button>
         </div>
       </div>
       <button className="border" onClick={handleDiscardHand}>

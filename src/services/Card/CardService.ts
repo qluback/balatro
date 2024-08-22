@@ -1,5 +1,5 @@
-import useGameStore from "../stores/GameStore";
-import { CardType } from "../types/CardType";
+import useGameStore from "../../stores/GameStore";
+import { CardType } from "../../types/CardType";
 
 function shuffleCards(deck: CardType[]): CardType[] {
   for (let i = deck.length - 1; i > 0; i--) {
