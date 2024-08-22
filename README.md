@@ -7,7 +7,7 @@ Développement du jeu "Balatro" en React Typescript
 - Au clic sur une Card: 
   - [x] Refresh state cardsSelected
   - [x] Calculer une combinaison prévisionnelle avec le state cardsSelected
-  - [ ] Pour le check d'une Suite : changer le order d'une carte As si j'ai un 2 dans les cardsSelected
+  - [x] Pour le check d'une Suite : changer le order d'une carte As si j'ai un 2 dans les cardsSelected
 - Au clic sur le bouton Défausser :
   - [x] Supprimer cartes du deck de la manche en cours et en rajouter dans les cartes sélectionnables
   - [x] Décrémenter le nombre de défausses restantes
