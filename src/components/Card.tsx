@@ -10,7 +10,7 @@ interface CardProps {
 export default function Card({card, onSelectCard}: CardProps) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  let cssClasses = "border h-36 flex flex-col justify-center items-center";
+  let cssClasses = "border h-36 flex flex-col justify-center items-center h-full";
 
   if (isSelected) {
     cssClasses += " bg-red-200";
