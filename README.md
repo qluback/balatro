@@ -20,6 +20,7 @@ Développement du jeu "Balatro" en React Typescript
   - [ ] Terminer le round si score du round >= objectif de score de la blind
   - [ ] Terminer le round si le nombre de mains restantes = 0 après le calcul du score
 - Au clic sur le bouton Trier la main par valeur :
-  - [ ] Trier les cardsSelectable par valeur
+  - [x] Trier les cardsSelectable par valeur
 - Au clic sur le bouton Trier la main par couleur :
-  - [ ] Trier les cardsSelectable par couleur
+  - [x] Trier les cardsSelectable par couleur
+  - [ ] Ajouter un champ orderSuit dans chaque Card pour trier dans l'ordre Pique/Trèfle/Coeur/Carreau
