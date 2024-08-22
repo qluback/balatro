@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CardType } from "../types/CardType";
+import { getSuitIcon } from "../services/Card/CardService";
 
 interface CardProps {
   card: CardType;
@@ -27,6 +28,7 @@ export default function Card({card, onSelectCard}: CardProps) {
       className={cssClasses}
       onClick={() => handleClick(card)}
     >
+      <img src={getSuitIcon(card.suit)} alt="" />
       <p>{card.suit}</p>
       <p>
         {card.label}
