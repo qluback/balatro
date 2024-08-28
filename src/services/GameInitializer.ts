@@ -18,7 +18,7 @@ export function initializeGame(): GameType {
 }
 
 function buildAntes(): AnteType[] {
-  let antes: AnteType[] = [];
+  const antes: AnteType[] = [];
   BASE_BLINDS.forEach((baseBlind) => {
     const ante: AnteType = {
       blinds: [
@@ -34,7 +34,7 @@ function buildAntes(): AnteType[] {
 }
 
 function buildPokerHands(): PokerHandType[] {
-  let pokerHands: PokerHandType[] = [];
+  const pokerHands: PokerHandType[] = [];
   BASE_POKER_HANDS_VALUES.forEach((pokerHand) => {
     pokerHands.push({ ...pokerHand, level: 1 });
   });

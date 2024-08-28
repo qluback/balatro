@@ -8,7 +8,7 @@ import useGameStore from "../stores/GameStore";
 export default function HandActionsMenu() {
   const forecastPokerHand = useGameStore((state) => state.forecastPokerHand);
   const cardsSelected = useGameStore((state) => state.cardsSelected);
-  let currentRound = useGameStore((state) => state.currentRound);
+  const currentRound = useGameStore((state) => state.currentRound);
 
   function handlePlayHand() {
     if (
