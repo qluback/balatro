@@ -19,7 +19,7 @@ export default function HandActionsMenu() {
       return;
 
     const initialValue = 0;
-    const sumCardsPoints = cardsSelected.reduce(
+    const sumCardsPoints = forecastPokerHand.cardsScorable.reduce(
       (accumulator: number, currentValue) => accumulator + currentValue.points,
       initialValue
     );

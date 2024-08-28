@@ -16,7 +16,7 @@ Développement du jeu "Balatro" en React Typescript
   - [x] Supprimer cartes du deck de la manche en cours et en rajouter dans les cartes sélectionnables
   - [x] Décrémenter le nombre de mains restantes
   - [x] Calculer le nombre de points de la main ((combinaison + nombre de points de chaque carte) * multiplicateur) et ajouter au total de la manche
-  - [ ] Ajouter le nombre de points de chaque carte uniquement si la carte fait partie d'une combinaison (renvoyer les cartes marquant des points dans la fonction getPokerHand())
+  - [x] Ajouter le nombre de points de chaque carte uniquement si la carte fait partie d'une combinaison (renvoyer les cartes marquant des points dans la fonction getPokerHand())
   - [ ] Terminer le round si score du round >= objectif de score de la blind
   - [ ] Terminer le round si le nombre de mains restantes = 0 après le calcul du score
 - Au clic sur le bouton Trier la main par valeur :
