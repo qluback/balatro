@@ -8,10 +8,10 @@ export default function ForecastPokerHand() {
       {forecastPokerHand !== null && (
         <>
           <p>
-            {forecastPokerHand.name} - niv.{forecastPokerHand.level}
+            {forecastPokerHand.pokerHand.name} - niv.{forecastPokerHand.pokerHand.level}
           </p>
           <p>
-            {forecastPokerHand.points}X{forecastPokerHand.multiplier}
+            {forecastPokerHand.pokerHand.points}X{forecastPokerHand.pokerHand.multiplier}
           </p>
         </>
       )}

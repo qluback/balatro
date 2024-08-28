@@ -1,200 +1,229 @@
+import { CardSortingEnum } from "../enums/CardSortingEnum";
+import { PokerHandEnum } from "../enums/PokerHandEnum";
+import useGameStore from "../stores/GameStore";
 import { CardType } from "../types/CardType";
+import { ForecastPokerHandType } from "../types/ForecastPokerHandType";
+import { PokerHandType } from "../types/PokerHandType";
+import { sortCards } from "./Card/CardSorter";
 
-export function getPokerHand(cards: CardType[]): string {
-  let pokerHand = "";
-  if (isStraightFlush(cards)) {
-    pokerHand = "straight-flush";
-  } else if (isFourOfAKind(cards)) {
-    pokerHand = "four-of-a-kind";
-  } else if (isFullHouse(cards)) {
-    pokerHand = "full-house";
-  } else if (isFlush(cards)) {
-    pokerHand = "flush";
-  } else if (isStraightPokerHand(cards)) {
-    pokerHand = "straight";
-  } else if (isThreeOfAKind(cards)) {
-    pokerHand = "three-of-a-kind";
-  } else if (isTwoPair(cards)) {
-    pokerHand = "two-pairs";
-  } else if (isOnePair(cards)) {
-    pokerHand = "pair";
-  } else if (isHighCard(cards)) {
-    pokerHand = "high-card";
-  }
-
-  return pokerHand;
+interface PokerHandFunctionList {
+  [key: string]: (cards: CardType[]) => null | PokerHandFoundData;
 }
 
-function compare(a: CardType, b: CardType) {
-  if (a.order < b.order) {
-    return -1;
-  }
-  if (a.order > b.order) {
-    return 1;
-  }
-  return 0;
+interface PokerHandFoundData {
+  pokerHandName: string;
+  cardsScorable: CardType[];
 }
 
-function isStraightFlush(cards: CardType[]): boolean {
-  // console.log("Checking isStraightFlush:");
-  if (!hasEnoughCards(cards.length, 5)) {
-    return false;
+export function getPokerHand(cards: CardType[]): ForecastPokerHandType | null {
+  if (cards.length === 0) return null;
+
+  const functionNames = Object.keys(pokerHandFunctions);
+  let pokerHandFoundData: null | PokerHandFoundData = null;
+  for (let i in Object.keys(pokerHandFunctions)) {
+    pokerHandFoundData = pokerHandFunctions[functionNames[i]](cards);
+
+    if (pokerHandFoundData !== null) break;
   }
 
-  if (!areSameColor(cards)) {
-    return false;
-  }
+  if (pokerHandFoundData === null) return null;
 
-  if (!isStraight(cards)) {
-    return false;
-  }
+  const gamePokerHand: PokerHandType | undefined = useGameStore
+    .getState()
+    .game?.pokerHands.find(
+      (pokerHand: PokerHandType) =>
+        pokerHand.id === pokerHandFoundData!.pokerHandName
+    );
 
-  console.log("It is a Straight Flush");
-  return true;
+  if (gamePokerHand === undefined) return null;
+
+  return {
+    pokerHand: gamePokerHand,
+    cardsScorable: pokerHandFoundData.cardsScorable,
+  };
 }
 
-function isFourOfAKind(cards: CardType[]): boolean {
-  // console.log("Checking isFourOfAKind:");
-  if (!hasEnoughCards(cards.length, 4)) {
-    return false;
-  }
-
-  const groupValues = regroupCardsByValue(cards);
-
-  for (const group in groupValues) {
-    if (groupValues[group].length === 4) {
-      console.log("It is a Four of a kind");
-      return true;
-    } 
-  }
-  
-  return false;
-}
-
-function isFullHouse(cards: CardType[]): boolean {
-  // console.log("Checking isFullHouse:");
-  if (!hasEnoughCards(cards.length, 5)) {
-    return false;
-  }
-
-  const groupValues = regroupCardsByValue(cards);
-
-  let hasThreeOfAKind = false;
-  let hasPair = false;
-  for (const group in groupValues) {
-    if (groupValues[group].length === 3) {
-      hasThreeOfAKind = true;
-    } else if (groupValues[group].length === 2) {
-      hasPair = true;
+const pokerHandFunctions: PokerHandFunctionList = {
+  isStraightFlush: (cards: CardType[]) => {
+    // console.log("Checking isStraightFlush:");
+    if (!hasEnoughCards(cards.length, 5)) {
+      return null;
     }
-  }
   
-  if (!hasThreeOfAKind || !hasPair) {
-    return false;
-  }
-  
-  console.log("It is a Full House");
-  return true;
-}
-
-function isFlush(cards: CardType[]): boolean {
-  // console.log("Checking isFlush:");
-  if (!hasEnoughCards(cards.length, 5)) {
-    return false;
-  }
-
-  if (!areSameColor(cards)) {
-    return false;
-  }
-
-  console.log("It is a Flush");
-  return true;
-}
-
-function isStraightPokerHand(cards: CardType[]): boolean {
-  // console.log("Checking isStraight:");
-  if (!hasEnoughCards(cards.length, 5)) {
-    return false;
-  }
-
-  if (!isStraight(cards)) {
-    return false;
-  }
-
-  console.log("It is a Straight");
-  return true;
-}
-
-function isThreeOfAKind(cards: CardType[]): boolean {
-  // console.log("Checking isThreeOfAKind:");
-  if (!hasEnoughCards(cards.length, 3)) {
-    return false;
-  }
-
-  const groupValues = regroupCardsByValue(cards);
-
-  for (const group in groupValues) {
-    if (groupValues[group].length === 3) {
-      console.log("It is a Three of a kind");
-      return true;
+    if (!areSameColor(cards)) {
+      return null;
     }
-  }
-
-  return false;
-}
-
-function isTwoPair(cards: CardType[]): boolean {
-  // console.log("Checking isTwoPair:");
-  if (!hasEnoughCards(cards.length, 4)) {
-    return false;
-  }
-
-  const groupValues = regroupCardsByValue(cards);
-
-  let numberPairs = 0;
-  for (const group in groupValues) {
-    if (groupValues[group].length === 2) {
-      numberPairs++;
+  
+    if (!isStraight(cards)) {
+      return null;
     }
-  }
   
-  if (numberPairs !== 2) {
-    return false;
-  }
-  
-  console.log("It is a Two Pair");
-  return numberPairs === 2;
-}
-
-function isOnePair(cards: CardType[]): boolean {
-  // console.log("Checking isOnePair:");
-  if (!hasEnoughCards(cards.length, 2)) {
-    return false;
-  }
-
-  const groupValues = regroupCardsByValue(cards);
-
-  for (const group in groupValues) {
-    if (groupValues[group].length === 2) {
-      console.log("It is a One Pair");
-      return true;
+    console.log("It is a Straight Flush");
+    return buildPokerHandFoundData(
+      PokerHandEnum.STRAIGHT_FLUSH_ID,
+      cards
+    );
+  },
+  isFourOfAKind: (cards: CardType[]) => {
+    // console.log("Checking isFourOfAKind:");
+    if (!hasEnoughCards(cards.length, 4)) {
+      return null;
     }
-  }
   
-  return false;
-}
+    const groupValues = regroupCardsByValue(cards);
+  
+    for (const group in groupValues) {
+      if (groupValues[group].length === 4) {
+        console.log("It is a Four of a kind");
+        return buildPokerHandFoundData(
+          PokerHandEnum.FOUR_OF_A_KIND_ID,
+          groupValues[group]
+        );
+      }
+    }
+  
+    return null;
+  },
+  isFullHouse: (cards: CardType[]) => {
+    // console.log("Checking isFullHouse:");
+    if (!hasEnoughCards(cards.length, 5)) {
+      return null;
+    }
+  
+    const groupValues = regroupCardsByValue(cards);
+  
+    let hasThreeOfAKind = false;
+    let hasPair = false;
+    for (const group in groupValues) {
+      if (groupValues[group].length === 3) {
+        hasThreeOfAKind = true;
+      } else if (groupValues[group].length === 2) {
+        hasPair = true;
+      }
+    }
+  
+    if (!hasThreeOfAKind || !hasPair) {
+      return null;
+    }
+  
+    console.log("It is a Full House");
+    return buildPokerHandFoundData(
+      PokerHandEnum.FULL_HOUSE_ID,
+      cards
+    );
+  },
+  isFlush: (cards: CardType[]) => {
+    // console.log("Checking isFlush:");
+    if (!hasEnoughCards(cards.length, 5)) {
+      return null;
+    }
+  
+    if (!areSameColor(cards)) {
+      return null;
+    }
+  
+    console.log("It is a Flush");
+    return buildPokerHandFoundData(
+      PokerHandEnum.FLUSH_ID,
+      cards
+    );
+  },
+  isStraightPokerHand: (cards: CardType[]) => {
+    // console.log("Checking isStraight:");
+    if (!hasEnoughCards(cards.length, 5)) {
+      return null;
+    }
+  
+    if (!isStraight(cards)) {
+      return null;
+    }
+  
+    console.log("It is a Straight");
+    return buildPokerHandFoundData(
+      PokerHandEnum.STRAIGHT_ID,
+      cards
+    );
+  },
+  isThreeOfAKind: (cards: CardType[]) => {
+    // console.log("Checking isThreeOfAKind:");
+    if (!hasEnoughCards(cards.length, 3)) {
+      return null;
+    }
+  
+    const groupValues = regroupCardsByValue(cards);
+  
+    for (const group in groupValues) {
+      if (groupValues[group].length === 3) {
+        console.log("It is a Three of a kind");
+        
+        return buildPokerHandFoundData(
+          PokerHandEnum.THREE_OF_A_KIND_ID,
+          groupValues[group]
+        );
+      }
+    }
+  
+    return null;
+  },
+  isTwoPair: (cards: CardType[]) => {
+    console.log("Checking two pairs");
+    if (!hasEnoughCards(cards.length, 4)) {
+      return null;
+    }
+  
+    const groupValues = regroupCardsByValue(cards);
+  
+    let pairs = [];
+    for (const group in groupValues) {
+      if (groupValues[group].length === 2) {
+        pairs.push(groupValues[group]);
+      }
+    }
+  
+    if (pairs.length !== 2) {
+      return null;
+    }
+  
+    console.log("It is a Two Pair");
 
-function isHighCard(cards: CardType[]): boolean {
-  // console.log("Checking isHighCard:");
-  if (!hasEnoughCards(cards.length, 1)) {
-    return false;
-  }
+    return buildPokerHandFoundData(PokerHandEnum.TWO_PAIRS_ID, pairs[0].concat(pairs[1]));
+  },
+  isOnePair: (cards: CardType[]) => {
+    console.log("checking pair");
+    if (!hasEnoughCards(cards.length, 2)) {
+      return null;
+    }
 
-  cards.sort(compare);
+    const groupValues = regroupCardsByValue(cards);
 
-  console.log(`It is a High Card ${cards[cards.length - 1].label}`);
-  return true;
-}
+    for (const group in groupValues) {
+      if (groupValues[group].length === 2) {
+        console.log("It is a One Pair", groupValues[group]);
+
+        return buildPokerHandFoundData(
+          PokerHandEnum.PAIR_ID,
+          groupValues[group]
+        );
+      }
+    }
+
+    return null;
+  },
+  isHighCard: (cards: CardType[]) => {
+    console.log("checking high card");
+    if (!hasEnoughCards(cards.length, 1)) {
+      return null;
+    }
+
+    cards = sortCards(cards, CardSortingEnum.SORTING_ORDER);
+
+    console.log(`It is a High Card ${cards[cards.length - 1].label}`);
+
+    return buildPokerHandFoundData(PokerHandEnum.HIGH_CARD_ID, [
+      cards[cards.length - 1],
+    ]);
+  },
+};
 
 function hasEnoughCards(
   numberCards: number,
@@ -219,8 +248,18 @@ function areSameColor(cards: CardType[]): boolean {
   return false;
 }
 
+function hasSpecificCard(label: string, cards: CardType[]): boolean {
+  return cards.some((card: CardType) => label === card.label);
+}
+
 function isStraight(cards: CardType[]): boolean {
-  cards.sort(compare);
+  if (hasSpecificCard("A", cards) && hasSpecificCard("2", cards)) {
+    // "Ace" card must be at the start of the straight if a "2" card exists
+    const aceCardIndex = cards.findIndex((card: CardType) => "A" === card.label);
+    cards[aceCardIndex].order = 1;
+  }
+  
+  cards = sortCards(cards, CardSortingEnum.SORTING_ORDER);
   for (let i = 0; i < cards.length - 1; i++) {
     if (cards[i + 1].order - cards[i].order !== 1) {
       // console.log("not a straight");
@@ -231,11 +270,21 @@ function isStraight(cards: CardType[]): boolean {
   return true;
 }
 
-function regroupCardsByValue(cards:CardType[]): Record<string, CardType[]> {
+function regroupCardsByValue(cards: CardType[]): Record<string, CardType[]> {
   return cards.reduce((result: any, currentValue: CardType) => {
     (result[currentValue["label"]] = result[currentValue["label"]] || []).push(
       currentValue
     );
     return result;
   }, {});
+}
+
+function buildPokerHandFoundData(
+  pokerHandName: string,
+  cards: CardType[]
+): PokerHandFoundData {
+  return {
+    pokerHandName: pokerHandName,
+    cardsScorable: cards,
+  };
 }
