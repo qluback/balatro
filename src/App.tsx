@@ -7,7 +7,7 @@ function App() {
   const game = useGameStore((state) => state.game);
 
   return (
-    <div className="App flex w-full px-8">
+    <div className="flex w-full">
       {game === null ? <MainMenu /> : <Game />}
     </div>
   );

@@ -36,20 +36,22 @@ export default function Game() {
   }
 
   return (
-    <section>
+    <section className="flex">
       <Sidebar />
-      <section className="grid grid-cols-8 gap-4">
-        {currentRound?.cardsSelectable.map((card: CardType) => {
-          return (
-            <Card
-              key={card.suit + card.label}
-              card={card}
-              onSelectCard={handleSelectCard}
-            />
-          );
-        })}
-      </section>
-      <HandActionsMenu />
+      <div className="w-2/3">
+        <section className="grid grid-cols-8 gap-4">
+          {currentRound?.cardsSelectable.map((card: CardType) => {
+            return (
+              <Card
+                key={card.suit + card.label}
+                card={card}
+                onSelectCard={handleSelectCard}
+              />
+            );
+          })}
+        </section>
+        <HandActionsMenu />
+      </div>
     </section>
   );
 }
