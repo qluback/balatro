@@ -1,5 +1,4 @@
 import { AnteType } from "./AnteType"
-import { BlindType } from "./BlindType"
 import { CardType } from "./CardType"
 import { PokerHandType } from "./PokerHandType"
 
