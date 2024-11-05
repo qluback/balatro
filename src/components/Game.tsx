@@ -38,7 +38,7 @@ export default function Game() {
   return (
     <section className="flex">
       <Sidebar />
-      <div className="w-2/3">
+      <div className="w-2/3 flex flex-col gap-8 px-4 py-16">
         <section className="grid grid-cols-8 gap-4">
           {currentRound?.cardsSelectable.map((card: CardType) => {
             return (

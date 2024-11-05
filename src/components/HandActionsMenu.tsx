@@ -1,7 +1,5 @@
 import { CardSortingEnum } from "../enums/CardSortingEnum";
-import {
-  refillCardsSelectable,
-} from "../services/Card/CardService";
+import { refillCardsSelectable } from "../services/Card/CardService";
 import { sortCards } from "../services/Card/CardSorter";
 import useGameStore from "../stores/GameStore";
 
@@ -53,8 +51,10 @@ export default function HandActionsMenu() {
     if (type === "value") {
       useGameStore.getState().setCurrentRound({
         ...currentRound!,
-        cardsSelectable:
-          sortCards(currentRound!.cardsSelectable, CardSortingEnum.SORTING_ORDER),
+        cardsSelectable: sortCards(
+          currentRound!.cardsSelectable,
+          CardSortingEnum.SORTING_ORDER
+        ),
       });
 
       return;
@@ -62,35 +62,43 @@ export default function HandActionsMenu() {
 
     useGameStore.getState().setCurrentRound({
       ...currentRound!,
-      cardsSelectable:
-      sortCards(currentRound!.cardsSelectable, CardSortingEnum.SORTING_SUIT),
+      cardsSelectable: sortCards(
+        currentRound!.cardsSelectable,
+        CardSortingEnum.SORTING_SUIT
+      ),
     });
   }
 
   return (
-    <section className="flex gap-8">
-      <button className="border" onClick={handlePlayHand}>
-        Jouer la main
+    <section className="flex gap-8 text-white">
+      <button
+        className="bg-[#0091FF] flex-1 rounded-lg text-2xl"
+        onClick={handlePlayHand}
+      >
+        Play Hand
       </button>
-      <div className="flex flex-col gap-4 border">
-        <span>Trier la main</span>
+      <div className="flex flex-col gap-2 border-4 p-4 pt-2">
+        <span className="text-center text-lg">Sort hand</span>
         <div className="flex gap-4">
           <button
-            className="border border-yellow-600"
+            className="bg-[#FF9700] rounded-lg p-4 w-20"
             onClick={() => handleSortCards("value")}
           >
-            Valeur
+            Rank
           </button>
           <button
-            className="border border-yellow-600"
+            className="bg-[#FF9700] rounded-lg p-4 w-20"
             onClick={() => handleSortCards("suit")}
           >
-            Couleur
+            Suit
           </button>
         </div>
       </div>
-      <button className="border" onClick={handleDiscardHand}>
-        Défausser
+      <button
+        className="bg-[#FF4C3F] flex-1 rounded-lg text-2xl"
+        onClick={handleDiscardHand}
+      >
+        Discard
       </button>
     </section>
   );
