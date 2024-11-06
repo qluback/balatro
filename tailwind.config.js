@@ -6,9 +6,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'green': "#478A6D",
-        'red-500': '#FF4C3F',
-      }
+        "blue": "#0091FF",
+        "green": "#478A6D",
+        "red": "#FF4C3F",
+        "redDark": "#FB4C3D",
+        "orangeLight": "#DF9822",
+        "orange": "#FF9700",
+        "orangeDark": "#FF8F01",
+        "yellowDark": "#A56D00",
+        "yellowDarker": "#54451A",
+        "blueGrayDark": "#2F3A3C",
+        "blueGrayDarker": "#1B2628",
+      },
     },
   },
   plugins: [],

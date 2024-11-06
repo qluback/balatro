@@ -13,7 +13,7 @@ export default function Card({card, onSelectCard}: CardProps) {
   let cssClasses = "border h-36 flex flex-col justify-center items-center h-full p-2 rounded-lg border-2 border-[#BDC6D5]";
 
   if (isSelected) {
-    cssClasses += " bg-red-200";
+    cssClasses += " bg-neutral-500";
   } else {
     cssClasses += " bg-white";
   }

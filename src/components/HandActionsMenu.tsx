@@ -72,7 +72,7 @@ export default function HandActionsMenu() {
 
   return (
     <section className="flex gap-8 text-white">
-      <Button bgColor="bg-[#0091FF]" handleClick={handlePlayHand}>
+      <Button bgColor="bg-blue" handleClick={handlePlayHand}>
         Play Hand
       </Button>
       <div className="flex flex-col flex-1 gap-2 border-4 p-4 pt-2">
@@ -80,21 +80,21 @@ export default function HandActionsMenu() {
         <div className="flex gap-4">
           <Button
             size="small"
-            bgColor="bg-[#FF9700]"
+            bgColor="bg-orange"
             handleClick={() => handleSortCards("value")}
           >
             Rank
           </Button>
           <Button
             size="small"
-            bgColor="bg-[#FF9700]"
+            bgColor="bg-orange"
             handleClick={() => handleSortCards("suit")}
           >
             Suit
           </Button>
         </div>
       </div>
-      <Button bgColor="bg-[#FF4C3F]" handleClick={handleDiscardHand}>
+      <Button bgColor="bg-red" handleClick={handleDiscardHand}>
         Discard
       </Button>
     </section>

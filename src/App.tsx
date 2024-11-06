@@ -8,7 +8,6 @@ function App() {
 
   return (
     <div className="flex w-full">
-      <div id="linear-overlay"></div>
       {game === null ? <MainMenu /> : <Game />}
     </div>
   );

@@ -8,13 +8,17 @@
 }
 
 body {
-  margin: 0;
   font-family: Balatro, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @apply bg-green;
+}
+
+#root {
+  margin: 0 auto;
+  max-width: 1280px;
 }
 
 #linear-overlay {
