@@ -6,9 +6,17 @@
 }
 
 .button {
-    @apply relative rounded-lg;
+  @apply relative rounded-lg;
 
-    &-large {
-        @apply text-2xl;
-    }
+  &-large {
+    @apply text-2xl;
+  }
+}
+
+.transition-card {
+  @apply transition duration-150 ease-out;
+}
+
+.card-selected {
+  transform: translateY(-10px);
 }
