@@ -1,6 +1,7 @@
 import useGameStore from "../stores/GameStore";
 import ForecastPokerHand from "./ForecastPokerHand";
 import casinoChip from "../assets/casino-chip.png";
+import Button from "./Button";
 
 export default function Sidebar() {
   const currentRound = useGameStore((state) => state.currentRound);
@@ -41,8 +42,12 @@ export default function Sidebar() {
       <ForecastPokerHand />
       <div className="flex gap-4">
         <div className="w-1/3 flex flex-col gap-4">
-          <button className="bg-[#FF4C3F] flex-1 rounded-lg text-2xl">Run<br />Info</button>
-          <button className="bg-[#FF9700] flex-1 rounded-lg text-2xl">Options</button>
+          <Button bgColor="bg-red-500">
+            Run
+            <br />
+            Info
+          </Button>
+          <Button bgColor="bg-[#FF9700]">Options</Button>
         </div>
         <div className="w-2/3 flex flex-col gap-y-4">
           <div className="flex gap-2">

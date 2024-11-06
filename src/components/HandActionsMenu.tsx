@@ -2,6 +2,7 @@ import { CardSortingEnum } from "../enums/CardSortingEnum";
 import { refillCardsSelectable } from "../services/Card/CardService";
 import { sortCards } from "../services/Card/CardSorter";
 import useGameStore from "../stores/GameStore";
+import Button from "./Button";
 
 export default function HandActionsMenu() {
   const forecastPokerHand = useGameStore((state) => state.forecastPokerHand);
@@ -71,35 +72,31 @@ export default function HandActionsMenu() {
 
   return (
     <section className="flex gap-8 text-white">
-      <button
-        className="bg-[#0091FF] flex-1 rounded-lg text-2xl"
-        onClick={handlePlayHand}
-      >
+      <Button bgColor="bg-[#0091FF]" handleClick={handlePlayHand}>
         Play Hand
-      </button>
-      <div className="flex flex-col gap-2 border-4 p-4 pt-2">
+      </Button>
+      <div className="flex flex-col flex-1 gap-2 border-4 p-4 pt-2">
         <span className="text-center text-lg">Sort hand</span>
         <div className="flex gap-4">
-          <button
-            className="bg-[#FF9700] rounded-lg p-4 w-20"
-            onClick={() => handleSortCards("value")}
+          <Button
+            size="small"
+            bgColor="bg-[#FF9700]"
+            handleClick={() => handleSortCards("value")}
           >
             Rank
-          </button>
-          <button
-            className="bg-[#FF9700] rounded-lg p-4 w-20"
-            onClick={() => handleSortCards("suit")}
+          </Button>
+          <Button
+            size="small"
+            bgColor="bg-[#FF9700]"
+            handleClick={() => handleSortCards("suit")}
           >
             Suit
-          </button>
+          </Button>
         </div>
       </div>
-      <button
-        className="bg-[#FF4C3F] flex-1 rounded-lg text-2xl"
-        onClick={handleDiscardHand}
-      >
+      <Button bgColor="bg-[#FF4C3F]" handleClick={handleDiscardHand}>
         Discard
-      </button>
+      </Button>
     </section>
   );
 }
