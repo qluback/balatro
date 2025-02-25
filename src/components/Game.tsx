@@ -1,9 +1,10 @@
 import { getPokerHand } from "../services/PokerHandChecker";
 import useGameStore from "../stores/GameStore";
 import { CardType } from "../types/CardType";
+import Button from "./Button";
 import Card from "./Card";
 import HandActionsMenu from "./HandActionsMenu";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 
 export default function Game() {
   const currentRound = useGameStore((state) => state.currentRound);
@@ -24,7 +25,6 @@ export default function Game() {
       cardsSelectedUpdated.push(cardSelected);
     }
 
-    
     useGameStore.getState().setCardsSelected(cardsSelectedUpdated);
     // if (cardsSelectedUpdated.length === 0) return false;
 
@@ -39,8 +39,20 @@ export default function Game() {
     <section className="flex items-center">
       <Sidebar />
       <div className="w-2/3 flex flex-col gap-8 px-4 py-16">
+        {currentRound?.hands === 4 && (
+          <div className="bg-blueGrayDark rounded-lg p-2">
+            <div className="bg-blueGrayDarker flex flex-col justify-center items-center gap-2 flex-1 rounded-lg p-4">
+              <Button bgColor="bg-orange">Encaisser: $6</Button>
+            </div>
+          </div>
+        )}
+        <section className="grid grid-cols-3 gap-4">
+          <div className="col-span-2 bg-black bg-opacity-20 rounded-lg p-4"></div>
+          <div className="bg-black bg-opacity-20 rounded-lg p-4"></div>
+        </section>
+        <section className="grid grid-cols-8 gap-4 bg-black bg-opacity-20 rounded-lg p-4"></section>
         <section className="grid grid-cols-8 gap-4 bg-black bg-opacity-20 rounded-lg p-4">
-          {currentRound?.cardsSelectable.map((card: CardType, index: number) => {
+          {currentRound?.cardsSelectable.map((card: CardType) => {
             return (
               <Card
                 key={card.suit + card.label}
