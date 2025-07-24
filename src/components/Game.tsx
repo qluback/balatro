@@ -37,6 +37,13 @@ export default function Game() {
 
   return (
     <section className="flex items-center">
+      <iframe
+        src="https://www.youtube.com/embed/RQ_lf3LwURE?autoplay=1&mute=1&controls=0&loop=1&playlist=RQ_lf3LwURE&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3"
+        title="YouTube video player"
+        allow="autoplay; fullscreen"
+        allowFullScreen
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] z-[-1]"
+      ></iframe>
       <Sidebar />
       <div className="w-2/3 flex flex-col gap-8 px-4 py-16">
         {currentRound?.hands === 4 && (

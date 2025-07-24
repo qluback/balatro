@@ -8,7 +8,7 @@ export default function Sidebar() {
   const currentRound = useGameStore((state) => state.currentRound);
 
   return (
-    <header className="bg-blueGrayDark w-1/3 max-w-md min-h-screen flex flex-col justify-center gap-2 text-white p-2">
+    <header className="bg-blueGrayDark w-1/3 max-w-md min-h-screen flex flex-col justify-center gap-2 text-white p-2 border-x-4 border-yellowDark">
       <h1 className="bg-yellowDark font-bold text-3xl text-center p-1 rounded-lg">
         {currentRound?.blind?.name}
       </h1>
@@ -42,11 +42,11 @@ export default function Sidebar() {
       </div>
       <ForecastPokerHand />
       <div className="flex gap-4">
-        <div className="w-1/3 flex flex-col gap-4">
+        <div className="w-1/3 flex flex-col gap-4 py-4">
           <Button bgColor="bg-red">
             Run
             <br />
-            Info
+            Infos
           </Button>
           <Button bgColor="bg-orange">Options</Button>
         </div>

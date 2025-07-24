@@ -14,11 +14,11 @@ export default function ForecastPokerHand() {
         </p>
         <div className="flex justify-between items-center gap-2 w-full">
           <div className="bg-blue flex-1 text-right rounded-lg px-2 py-4 text-5xl">
-            <span className={visibilityClass}>{forecastPokerHand?.pokerHand.points ?? 0}</span>
+            <span >{forecastPokerHand?.pokerHand.points ?? 0}</span>
           </div>
           <span className="text-redDark text-5xl">X</span>
           <div className="bg-red flex-1 rounded-lg px-2 py-4 text-5xl">
-          <span className={visibilityClass}>{forecastPokerHand?.pokerHand.multiplier ?? 0}</span>
+          <span>{forecastPokerHand?.pokerHand.multiplier ?? 0}</span>
           </div>
         </div>
       </div>
