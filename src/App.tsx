@@ -55,7 +55,7 @@ function App() {
 
       {(game || gameVisible) && <Game />}
 
-      <div className="absolute top-8 right-8 flex flex-col justify-center volume-container">
+      <div className="fixed top-8 right-8 flex flex-col justify-center volume-container">
         <audio autoPlay muted className="absolute top-0 left-0" ref={audioRef}>
           <source src="./balatro.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.

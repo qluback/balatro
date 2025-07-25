@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { CardType } from "../types/CardType";
-import { getSuitIcon } from "../services/Card/CardService";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -8,23 +7,20 @@ gsap.registerPlugin(useGSAP);
 
 interface CardProps {
   card: CardType;
+  animationDelay: string;
   onSelectCard: (card: CardType) => boolean;
 }
 
-export default function Card({ card, onSelectCard }: CardProps) {
+export default function Card({
+  card,
+  animationDelay,
+  onSelectCard,
+}: CardProps) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const container = useRef<HTMLButtonElement>(null);
-  const { contextSafe } = useGSAP(
-    () => {
-      // use selectors...
-      // gsap.to(".box", { rotation: "+=360", duration: 3 });
-      // or refs...
-    },
-    { scope: container }
-  );
 
   let cssClasses =
-    "container border h-36 flex flex-col justify-center items-center h-full p-2 rounded-lg border-2 border-[#BDC6D5] card";
+    "h-[150px] w-[100px] 2xl:h-[200px] 2xl:w-[150px] flex flex-col justify-center items-center rounded-lg border-2 border-[#BDC6D5] shadow-blackTransparent card";
 
   if (isSelected) {
     cssClasses += " bg-neutral-500 card-selected";
@@ -68,9 +64,7 @@ export default function Card({ card, onSelectCard }: CardProps) {
       rotateX: rotateX,
       rotateY: rotateY,
       scale: 1.1,
-      translateY: isSelected ? -20 : 0
-      // duration: 0.3,
-      // ease: "power2.out",
+      translateY: isSelected ? -40 : 0,
     });
   };
 
@@ -82,10 +76,20 @@ export default function Card({ card, onSelectCard }: CardProps) {
       rotateX: 0,
       rotateY: 0,
       scale: 1,
-      translateY: isSelected ? -20 : 0
-      // duration: 0.5,
-      // ease: "power2.out",
+      translateY: isSelected ? -40 : 0,
     });
+  };
+
+  const Image = () => {
+    const image = require(`../assets/${card.suit}/${card.suit}_${card.label}.png`);
+
+    return (
+      <img
+        className="w-full rounded-lg"
+        src={image}
+        alt={`${card.suit}_${card.label}`}
+      />
+    );
   };
 
   return (
@@ -93,17 +97,14 @@ export default function Card({ card, onSelectCard }: CardProps) {
       ref={container}
       className={cssClasses}
       onClick={() => handleClick(card)}
-      // onMouseEnter={onHover}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
         transformStyle: "preserve-3d",
-        perspective: "1000px",
+        animationDelay: animationDelay,
       }}
     >
-      <img src={getSuitIcon(card.suit)} alt="" />
-      <p>{card.suit}</p>
-      <p>{card.label}</p>
+      <Image />
     </button>
   );
 }

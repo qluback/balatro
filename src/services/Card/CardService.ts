@@ -40,18 +40,18 @@ function refillCardsSelectable(
   });
 }
 
-function getSuitIcon(suit: string): string {
-  switch (suit) {
-    case CardSuitEnum.SPADES:
-      return spadeIcon;
-    case CardSuitEnum.CLUBS:
-      return clubIcon;
-    case CardSuitEnum.HEARTS:
-      return heartIcon;
-    case CardSuitEnum.DIAMONDS:
-    default:
-      return diamondIcon;
-  }
-}
+// function getSuitIcon(suit: string): string {
+//   switch (suit) {
+//     case CardSuitEnum.SPADES:
+//       return spadeIcon;
+//     case CardSuitEnum.CLUBS:
+//       return clubIcon;
+//     case CardSuitEnum.HEARTS:
+//       return heartIcon;
+//     case CardSuitEnum.DIAMONDS:
+//     default:
+//       return diamondIcon;
+//   }
+// }
 
-export { shuffleCards, refillCardsSelectable, getSuitIcon };
+export { shuffleCards, refillCardsSelectable };

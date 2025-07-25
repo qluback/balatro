@@ -36,7 +36,7 @@ export default function Game() {
   }
 
   return (
-    <section className="flex items-center">
+    <>
       <iframe
         src="https://www.youtube.com/embed/RQ_lf3LwURE?autoplay=1&mute=1&controls=0&loop=1&playlist=RQ_lf3LwURE&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3"
         title="YouTube video player"
@@ -44,33 +44,41 @@ export default function Game() {
         allowFullScreen
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] z-[-1]"
       ></iframe>
-      <Sidebar />
-      <div className="w-2/3 flex flex-col gap-8 px-4 py-16">
-        {currentRound?.hands === 4 && (
-          <div className="bg-blueGrayDark rounded-lg p-2">
-            <div className="bg-blueGrayDarker flex flex-col justify-center items-center gap-2 flex-1 rounded-lg p-4">
-              <Button bgColor="bg-orange">Encaisser: $6</Button>
+      <section
+        className="flex items-center px-8 lg:scale-[0.9] 2xl:scale-100"
+      >
+        <Sidebar />
+        <div className="w-full flex flex-col gap-8 px-4 py-16">
+          {currentRound?.hands === 4 && (
+            <div className="bg-blueGrayDark rounded-lg p-2">
+              <div className="bg-blueGrayDarker flex flex-col justify-center items-center gap-2 flex-1 rounded-lg p-4">
+                <Button bgColor="bg-orange"><span className="inline-block text-5xl px-8 py-3">Encaisser: $6</span></Button>
+              </div>
             </div>
-          </div>
-        )}
-        <section className="grid grid-cols-3 gap-4">
-          <div className="col-span-2 bg-black bg-opacity-20 rounded-lg p-4"></div>
-          <div className="bg-black bg-opacity-20 rounded-lg p-4"></div>
-        </section>
-        <section className="grid grid-cols-8 gap-4 bg-black bg-opacity-20 rounded-lg p-4"></section>
-        <section className="grid grid-cols-8 gap-4 bg-black bg-opacity-20 rounded-lg p-4">
-          {currentRound?.cardsSelectable.map((card: CardType) => {
-            return (
-              <Card
-                key={card.suit + card.label}
-                card={card}
-                onSelectCard={handleSelectCard}
-              />
-            );
-          })}
-        </section>
-        <HandActionsMenu />
-      </div>
-    </section>
+          )}
+          {/* <section className="grid grid-cols-3 gap-4">
+            <div className="col-span-2 bg-black bg-opacity-20 rounded-lg p-4"></div>
+            <div className="bg-black bg-opacity-20 rounded-lg p-4"></div>
+          </section>
+          <section className="grid grid-cols-8 gap-4 bg-black bg-opacity-20 rounded-lg p-4"></section> */}
+          <section
+            className="grid grid-cols-8 rounded-lg py-4 max-w-[1000px] m-auto"
+            style={{ perspective: "1000px" }}
+          >
+            {currentRound?.cardsSelectable.map((card: CardType, index) => {
+              return (
+                <Card
+                  key={card.suit + card.label}
+                  card={card}
+                  animationDelay={`${Math.random()}s`}
+                  onSelectCard={handleSelectCard}
+                />
+              );
+            })}
+          </section>
+          <HandActionsMenu />
+        </div>
+      </section>
+    </>
   );
 }
