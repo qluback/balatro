@@ -5,6 +5,7 @@ import Button from "./Button";
 import Card from "./Card";
 import HandActionsMenu from "./HandActionsMenu";
 import Sidebar from "./Sidebar/Sidebar";
+import casinoChip from "../assets/casino-chip.png";
 
 export default function Game() {
   const currentRound = useGameStore((state) => state.currentRound);
@@ -44,15 +45,64 @@ export default function Game() {
         allowFullScreen
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] z-[-1]"
       ></iframe>
-      <section
-        className="flex items-center px-8 lg:scale-[0.9] 2xl:scale-100"
-      >
+      <section className="flex items-center px-8 lg:scale-[0.9] 2xl:scale-100">
         <Sidebar />
         <div className="w-full flex flex-col gap-8 px-4 py-16">
           {currentRound?.hands === 4 && (
-            <div className="bg-blueGrayDark rounded-lg p-2">
+            <div className="bg-blueGrayDark rounded-lg p-2 border-yellowDark border-4 w-full max-w-[1000px] m-auto">
               <div className="bg-blueGrayDarker flex flex-col justify-center items-center gap-2 flex-1 rounded-lg p-4">
-                <Button bgColor="bg-orange"><span className="inline-block text-5xl px-8 py-3">Encaisser: $6</span></Button>
+                <Button bgColor="bg-orange">
+                  <span className="inline-block text-5xl px-8 py-3">
+                    Encaisser: $6
+                  </span>
+                </Button>
+
+                <div className="flex justify-between items-center gap-2 w-full px-4 py-1">
+                  <div className="flex gap-8">
+                    <div className="bg-orange text-blueGrayDarker font-bold flex justify-center items-center w-24 aspect-square rounded-full shadow-blackTransparent">
+                      <span className="text-center text-2xl uppercase">
+                        Big <br /> Blind
+                      </span>
+                    </div>
+                    <div className="flex flex-col items-center text-white">
+                      <span>Score at least</span>
+                      <div className="flex items-center gap-2 m-auto">
+                        <img src={casinoChip} alt="" className="w-10 invert" />
+                        <span className="text-red text-6xl">
+                          {currentRound?.blind?.scoreObjective}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="flex justify-center items-start gap-2">
+                    <span className="text-orange text-4xl">
+                      <span
+                        className="animate-dollar-blind delay-[0ms] inline-block"
+                        style={{ animationDelay: "0ms" }}
+                      >
+                        $
+                      </span>
+                      <span
+                        className="animate-dollar-blind delay-[2000ms] inline-block"
+                        style={{ animationDelay: "400ms" }}
+                      >
+                        $
+                      </span>
+                      <span
+                        className="animate-dollar-blind delay-[4000ms] inline-block"
+                        style={{ animationDelay: "800ms" }}
+                      >
+                        $
+                      </span>
+                      <span
+                        className="animate-dollar-blind delay-[6000ms] inline-block"
+                        style={{ animationDelay: "1200ms" }}
+                      >
+                        $
+                      </span>
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           )}
