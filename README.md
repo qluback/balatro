@@ -1,5 +1,8 @@
 # Balatro
+
 Development of the game "Balatro" to learn React and TypeScript
+Work in progress
+
 ![Preview Menu](./preview-menu.jpg)
 ![Preview InGame](./preview-ingame.jpg)
 
