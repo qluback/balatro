@@ -1,5 +1,5 @@
 .button:before {
-  @apply content-[''] hidden absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-lg;
+  @apply content-[''] hidden absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-xl;
 }
 .button:before:hover {
   @apply block;

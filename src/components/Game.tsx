@@ -36,6 +36,46 @@ export default function Game() {
     return true;
   }
 
+  const DotGrid = () => {
+    const totalDots = 36;
+    const waveCount = 3;
+    const waveDelayGap = 0.5; // delay between waves in seconds
+
+    // Dots per wave (roughly even split)
+    const dotsPerWave = Math.ceil(totalDots / waveCount);
+
+    const dots = Array.from({ length: totalDots }, (_, index) => {
+      // Determine which wave this dot is in
+      const waveIndex = Math.floor(index / dotsPerWave);
+      const dotIndexInWave = index % dotsPerWave;
+
+      // Animation delay: base wave delay + dot position in wave
+      const delay = waveIndex * waveDelayGap + dotIndexInWave * 0.1;
+
+      return (
+        <div
+          key={index}
+          className="bg-white w-2 aspect-square wave-letter"
+          style={{ animationDelay: `${delay}s` }}
+        ></div>
+      );
+    });
+
+    return <div className="flex justify-around w-full">{dots}</div>;
+  };
+
+  const DollarDisplay = ({ hands }: { hands: number }) => {
+    const dollars = Array.from({ length: hands }, (_, i) => (
+      <span
+        key={i}
+      >
+        $
+      </span>
+    ));
+
+    return <>{dollars}</>;
+  };
+
   return (
     <>
       <iframe
@@ -47,17 +87,17 @@ export default function Game() {
       ></iframe>
       <section className="flex items-center px-8 lg:scale-[0.9] 2xl:scale-100">
         <Sidebar />
-        <div className="w-full flex flex-col gap-8 px-4 py-16">
+        <div className="w-full h-screen relative flex flex-col justify-center gap-8 px-4 py-16">
           {currentRound?.hands === 4 && (
-            <div className="bg-blueGrayDark rounded-lg p-2 border-yellowDark border-4 w-full max-w-[1000px] m-auto">
-              <div className="bg-blueGrayDarker flex flex-col justify-center items-center gap-2 flex-1 rounded-lg p-4">
+            <div className="bg-blueGrayDark rounded-t-3xl p-2 border-yellowDark border-4 w-full max-w-[1100px] h-3/4 z-10 m-auto absolute -bottom-2 left-1/2 -translate-x-1/2">
+              <div className="bg-blueGrayDarker flex flex-col justify-center items-center gap-8 flex-1 rounded-3xl p-4 shadow-blackDark">
                 <Button bgColor="bg-orange">
-                  <span className="inline-block text-5xl px-8 py-3">
+                  <span className="inline-block text-6xl px-8 py-3">
                     Encaisser: $6
                   </span>
                 </Button>
 
-                <div className="flex justify-between items-center gap-2 w-full px-4 py-1">
+                <div className="flex justify-between items-center gap-2 w-full">
                   <div className="flex gap-8">
                     <div className="bg-orange text-blueGrayDarker font-bold flex justify-center items-center w-24 aspect-square rounded-full shadow-blackTransparent">
                       <span className="text-center text-2xl uppercase">
@@ -103,6 +143,30 @@ export default function Game() {
                     </span>
                   </p>
                 </div>
+                <DotGrid />
+                <div className="flex justify-between w-full">
+                  <p className="flex items-center text-white gap-4">
+                    <span className="text-blue text-5xl">
+                      {currentRound.hands}
+                    </span>{" "}
+                    hands remaining (1 $ each)
+                  </p>
+                  <span className="text-orange text-4xl">
+                    <DollarDisplay hands={currentRound.hands} />
+                    {/* <span
+                        className="animate-dollar-blind delay-[4000ms] inline-block"
+                        style={{ animationDelay: "800ms" }}
+                      >
+                        $
+                      </span>
+                      <span
+                        className="animate-dollar-blind delay-[6000ms] inline-block"
+                        style={{ animationDelay: "1200ms" }}
+                      >
+                        $
+                      </span> */}
+                  </span>
+                </div>
               </div>
             </div>
           )}
@@ -112,7 +176,7 @@ export default function Game() {
           </section>
           <section className="grid grid-cols-8 gap-4 bg-black bg-opacity-20 rounded-lg p-4"></section> */}
           <section
-            className="grid grid-cols-8 rounded-lg py-4 max-w-[1000px] m-auto"
+            className="grid grid-cols-8 rounded-lg py-4 max-w-[1000px] mx-auto"
             style={{ perspective: "1000px" }}
           >
             {currentRound?.cardsSelectable.map((card: CardType, index) => {
