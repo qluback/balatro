@@ -1,27 +1,27 @@
 # Balatro
-Développement du jeu "Balatro" en React Typescript
+Development of the game "Balatro" in React TypeScript
 ![Preview Menu](./preview-menu.jpg)
 ![Preview InGame](./preview-ingame.jpg)
 
 ## To Do
-- Ajouter niveaux des mains de poker
-- Au clic sur une Card: 
-  - [x] Refresh state cardsSelected
-  - [x] Calculer une combinaison prévisionnelle avec le state cardsSelected
-  - [x] Pour le check d'une Suite : changer le order d'une carte As si j'ai un 2 dans les cardsSelected
-- Au clic sur le bouton Défausser :
-  - [x] Supprimer cartes du deck de la manche en cours et en rajouter dans les cartes sélectionnables
-  - [x] Décrémenter le nombre de défausses restantes
-  - [ ] Ne pas rendre cliquable si nombre restantes = 0
-- Au clic sur le bouton Jouer la main :
-  - [x] Supprimer cartes du deck de la manche en cours et en rajouter dans les cartes sélectionnables
-  - [x] Décrémenter le nombre de mains restantes
-  - [x] Calculer le nombre de points de la main ((combinaison + nombre de points de chaque carte) * multiplicateur) et ajouter au total de la manche
-  - [x] Ajouter le nombre de points de chaque carte uniquement si la carte fait partie d'une combinaison (renvoyer les cartes marquant des points dans la fonction getPokerHand())
-  - [ ] Terminer le round si score du round >= objectif de score de la blind
-  - [ ] Terminer le round si le nombre de mains restantes = 0 après le calcul du score
-- Au clic sur le bouton Trier la main par valeur :
-  - [x] Trier les cardsSelectable par valeur
-- Au clic sur le bouton Trier la main par couleur :
-  - [x] Trier les cardsSelectable par couleur
-  - [ ] Ajouter un champ orderSuit dans chaque Card pour trier dans l'ordre Pique/Trèfle/Coeur/Carreau
+- Add poker hand levels
+- On Card click:
+  - [x] Refresh the cardsSelected state.
+  - [x] Compute a forecasted poker hand using the cardsSelected state.
+  - [x] For detecting a Straight: change the order of an Ace if a 2 is present in cardsSelected.
+- On Discard button click:
+  - [x] Remove selected cards from the current round’s deck.
+  - [x] Decrease the number of remaining discards.
+  - [ ] Make button unclickable if no discards remain.
+- On Play Hand button click:
+  - [x] Remove cards from the current round’s deck and add new cards to cardsSelectable.
+  - [x] Decrease the number of remaining hands.
+  - [x] Calculate hand score: ((combination points + card points) × multiplier) and add it to the round total.
+  - [x] Add the point value of each card only if it’s part of a valid combination (returned by getPokerHand()).
+  - [ ] End the round if round score >= blind's score objective.
+  - [ ] End the round if number of hands left = 0 after scoring.
+- On Sort Hand by Value button click:
+  - [x] Sort cardsSelectable by value.
+- On Sort Hand by Suit button click:
+  - [x] Sort cardsSelectable by suit.
+  - [ ] Add an orderSuit field to each Card to sort in the order: Spades > Clubs > Hearts > Diamonds.
