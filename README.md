@@ -1,5 +1,5 @@
 # Balatro
-Development of the game "Balatro" in React TypeScript
+Development of the game "Balatro" to learn React and TypeScript
 ![Preview Menu](./preview-menu.jpg)
 ![Preview InGame](./preview-ingame.jpg)
 
