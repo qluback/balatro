@@ -1,6 +1,7 @@
 # Balatro
-
 Développement du jeu "Balatro" en React Typescript
+![Preview Menu](./preview-menu.jpg)
+![Preview InGame](./preview-ingame.jpg)
 
 ## To Do
 - Ajouter niveaux des mains de poker
