@@ -1,9 +1,11 @@
 # Balatro
 
 Development of the game "Balatro" to learn React and TypeScript (Work in progress)
+Demo : https://qluback-balatro.netlify.app/
 
 ![Preview Menu](./preview-menu.jpg)
 ![Preview InGame](./preview-ingame.jpg)
+[Demo Link](https://qluback-balatro.netlify.app/)
 
 ## To Do
 - Add poker hand levels
