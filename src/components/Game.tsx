@@ -1,7 +1,6 @@
 import { getPokerHand } from "../services/PokerHandChecker";
 import useGameStore from "../stores/GameStore";
 import { CardType } from "../types/CardType";
-import Button from "./Button";
 import Card from "./Card";
 import HandActionsMenu from "./HandActionsMenu";
 import Sidebar from "./Sidebar/Sidebar";
@@ -64,7 +63,7 @@ export default function Game({ onClose }: {onClose: () => void}) {
             className="grid grid-cols-8 rounded-lg py-4 max-w-[1000px] mx-auto"
             style={{ perspective: "1000px" }}
           >
-            {currentRound?.cardsSelectable.map((card: CardType, index) => {
+            {currentRound?.cardsSelectable.map((card: CardType) => {
               return (
                 <Card
                   key={card.suit + card.label}

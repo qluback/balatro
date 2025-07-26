@@ -1,10 +1,5 @@
 import useGameStore from "../../stores/GameStore";
 import { CardType } from "../../types/CardType";
-import spadeIcon from "../../assets/spade-svgrepo-com.svg";
-import heartIcon from "../../assets/heart-svgrepo-com.svg";
-import diamondIcon from "../../assets/diamond-svgrepo-com.svg";
-import clubIcon from "../../assets/club-svgrepo-com.svg";
-import { CardSuitEnum } from "../../enums/CardSuitEnum";
 
 function shuffleCards(deck: CardType[]): CardType[] {
   for (let i = deck.length - 1; i > 0; i--) {

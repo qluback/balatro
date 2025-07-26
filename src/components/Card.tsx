@@ -3,6 +3,17 @@ import { CardType } from "../types/CardType";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
+declare const require: {
+  context(
+    directory: string,
+    useSubdirectories: boolean,
+    regExp: RegExp
+  ): {
+    keys: () => string[];
+    (id: string): string;
+  };
+};
+
 gsap.registerPlugin(useGSAP);
 
 interface CardProps {
@@ -79,17 +90,19 @@ export default function Card({
     });
   };
 
-  const Image = () => {
-    const image = require(`../assets/${card.suit}/${card.suit}_${card.label}.png`);
+  const cardImages = require.context('../assets', true, /\.png$/);
+  const Image = ({ card }: { card: CardType }) => {
+  const imagePath = `./${card.suit}/${card.suit}_${card.label}.png`;
+  const image = cardImages(imagePath);
 
-    return (
-      <img
-        className="w-full rounded-lg"
-        src={image}
-        alt={`${card.suit}_${card.label}`}
-      />
-    );
-  };
+  return (
+    <img
+      className="w-full rounded-lg"
+      src={image}
+      alt={`${card.suit}_${card.label}`}
+    />
+  );
+};
 
   return (
     <button
@@ -103,7 +116,7 @@ export default function Card({
         animationDelay: animationDelay,
       }}
     >
-      <Image />
+      <Image card={card} />
     </button>
   );
 }
