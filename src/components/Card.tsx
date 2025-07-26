@@ -20,15 +20,14 @@ export default function Card({
   const container = useRef<HTMLButtonElement>(null);
 
   let cssClasses =
-    "h-[150px] w-[100px] 2xl:h-[200px] 2xl:w-[150px] flex flex-col justify-center items-center rounded-lg border-2 border-[#BDC6D5] shadow-blackTransparent card";
+    "h-[150px] w-[120px] 2xl:h-[200px] 2xl:w-[150px] bg-white flex flex-col justify-center items-center rounded-lg border-2 border-[#BDC6D5] shadow-blackTransparent card";
 
   if (isSelected) {
-    cssClasses += " bg-neutral-500 card-selected";
-  } else {
-    cssClasses += " bg-white";
+    cssClasses += " card-selected";
   }
 
   function handleClick(card: CardType) {
+    console.log("handle");
     const result = onSelectCard({
       suit: card.suit,
       label: card.label,

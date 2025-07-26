@@ -78,7 +78,7 @@
 .app-root {
   position: relative;
   max-width: 1920px;
-  height: 100vh;
+  // height: 100vh;
   overflow: hidden;
   margin: auto;
 }
@@ -91,11 +91,18 @@
   height: 0;
   background-color: #1b2628;
   transform: translate(-50%, -50%) rotate(20deg);
-  animation: grow-fullscreen 2s ease forwards;
   z-index: 1000;
+
+  &-start {
+    animation: grow-fullscreen-start 2s ease forwards;
+  }
+
+  &-close {
+    animation: grow-fullscreen-close 2s ease forwards;
+  }
 }
 
-@keyframes grow-fullscreen {
+@keyframes grow-fullscreen-start {
   0% {
     width: 0;
     height: 0;
@@ -109,6 +116,29 @@
     width: 150vw;
     height: 150vw;
     background-color: #478a6d;
+    opacity: 1;
+  }
+  100% {
+    // width: 150vw;
+    // height: 150vw;
+    opacity: 0;
+  }
+}
+
+@keyframes grow-fullscreen-close {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  35% {
+    width: 150vw;
+    height: 150vw;
+    background-color: #1b2628;
+  }
+  75% {
+    width: 150vw;
+    height: 150vw;
+    background-color: #FF4C3F;
     opacity: 1;
   }
   100% {
@@ -211,4 +241,19 @@
 .wave-letter {
   display: inline-block;
   animation: wave 5s ease-in-out infinite;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0%);
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slide-up 0.6s ease-out forwards;
 }

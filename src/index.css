@@ -34,7 +34,7 @@ body {
   pointer-events: none;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   background-size: 100% 200px;
   z-index: 1;
   /* animation: diagonal_move 30s linear infinite; */

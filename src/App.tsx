@@ -2,32 +2,48 @@ import "./App.scss";
 import useGameStore from "./stores/GameStore";
 import MainMenu from "./components/MainMenu";
 import Game from "./components/Game";
-import Balatro from "./components/Balatro";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import iconVolumeMute from "./assets/mute.png";
 import iconVolumeUp from "./assets/volume.png";
 
 function App() {
   const game = useGameStore((state) => state.game);
-  const [showTransition, setShowTransition] = useState(false);
+  const resetGame = useGameStore((state) => state.reset);
+  const [showTransitionStart, setShowTransitionStart] = useState(false);
+  const [showTransitionClose, setShowTransitionClose] = useState(false);
   const [gameVisible, setGameVisible] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [volume, setVolume] = useState(1); // Default to full volume
+  console.log(game);
 
-  const handleStartGame = () => {
-    setShowTransition(true);
+  function handleStartGame() {
+    setShowTransitionStart(true);
 
     setTimeout(() => {
       setGameVisible(true);
     }, 1000); // Duration matches CSS animation
     // Wait for animation to complete before showing the Game
     setTimeout(() => {
-      setShowTransition(false);
+      setShowTransitionStart(false);
     }, 2000); // Duration matches CSS animation
-  };
+  }
+
+  function handleCloseGame() {
+    setShowTransitionClose(true);
+
+    setTimeout(() => {
+      setGameVisible(false);
+      resetGame();
+    }, 1000); // Duration matches CSS animation
+    // Wait for animation to complete before showing the Game
+    setTimeout(() => {
+      setShowTransitionClose(false);
+    }, 2000); // Duration matches CSS animation
+  }
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const handleUnmute = () => {
+  function handleUnmute() {
     const audio = audioRef.current;
     if (audio) {
       const newMuteState = !audio.muted;
@@ -42,18 +58,19 @@ function App() {
         });
       setIsMuted(newMuteState); // Only set this here!
     }
-  };
+  }
 
   return (
     // <div className="flex w-full">
     //   {game === null ? <MainMenu /> : <Game />}
     // </div>
     <div className="app-root">
-      {showTransition && <div className="screen-transition" />}
+      {showTransitionStart && <div className="screen-transition screen-transition-start" />}
+      {showTransitionClose && <div className="screen-transition screen-transition-close" />}
 
       {!gameVisible && <MainMenu onStart={handleStartGame} />}
 
-      {(game || gameVisible) && <Game />}
+      {(game || gameVisible) && <Game onClose={handleCloseGame} />}
 
       <div className="fixed top-8 right-8 flex flex-col justify-center volume-container">
         <audio autoPlay muted className="absolute top-0 left-0" ref={audioRef}>

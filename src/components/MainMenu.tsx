@@ -8,7 +8,7 @@ import homeLogo from "../assets/home-logo.png";
 import HomeMenuCard from "./Home/HomeMenuCard";
 import Button from "./Button";
 
-export default function MainMenu({ onStart }: {onStart: any}) {
+export default function MainMenu({ onStart }: {onStart: () => void}) {
   function handleStartGame() {
     const newGame = initializeGame();
     useGameStore.getState().setGame(newGame);

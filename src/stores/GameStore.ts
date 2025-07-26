@@ -12,6 +12,7 @@ type Store = {
   currentRound: RoundType | null;
   sorting: CardSortingEnum;
   setGame: (game: GameType) => void;
+  reset: () => void;
   setCardsSelected: (cards: CardType[]) => void;
   setForecastPokerHand: (forecastPokerHand: ForecastPokerHandType | null) => void;
   setCurrentRound: (round: RoundType) => void;
@@ -21,13 +22,18 @@ type Store = {
   updateRoundDeck: (deck: CardType[]) => void;
 };
 
-const useGameStore = create<Store>((set) => ({
+const initialState = {
   game: null,
   cardsSelected: [],
   forecastPokerHand: null,
   currentRound: null,
   sorting: CardSortingEnum.SORTING_ORDER,
+};
+
+const useGameStore = create<Store>((set) => ({
+  ...initialState,
   setGame: (game: GameType) => set(() => ({ game: game })),
+  reset: () => set(() => initialState),
   setCardsSelected: (cards: CardType[]) =>
     set(() => ({ cardsSelected: cards })),
   setForecastPokerHand: (forecastPokerHand: ForecastPokerHandType | null) =>
